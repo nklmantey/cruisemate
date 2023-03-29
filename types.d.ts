@@ -10,4 +10,5 @@ type AuthStackParamList = {
 };
 type HomeStackParamList = {
   Home: undefined;
+  Settings: undefined;
 };

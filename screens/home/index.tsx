@@ -1,4 +1,4 @@
-import { ActivityIndicator, View } from "react-native";
+import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 import { PrimaryButton } from "../../components/ui/Button";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
@@ -8,33 +8,14 @@ import { greetings } from "../../utils";
 import SearchBar from "../../components/home/SearchBar";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useState } from "react";
-import { signOut } from "firebase/auth";
-import { auth } from "../../config/firebase";
+import { useNavigation } from "@react-navigation/native";
 
 const HomeScreen = () => {
   const theme = useColorScheme();
   const [loading, setLoading] = useState<boolean>(false);
   const user = useAuthStore((state) => state.user);
-  const setUser = useAuthStore((state) => state.setUser);
-  const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn);
 
-  const handleLogout = async () => {
-    setLoading(true);
-
-    try {
-      await signOut(auth);
-      setUser({
-        id: null,
-        email: null,
-        name: null,
-        number: null,
-      });
-      setIsLoggedIn(false);
-      setLoading(false);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const { navigate }: any = useNavigation();
 
   return (
     <View
@@ -53,13 +34,14 @@ const HomeScreen = () => {
       >
         <Ionicons name="menu" color={Colors[theme].text} size={20} />
         <BoldText>Home</BoldText>
-        <View
+        <TouchableOpacity
           style={{
             width: 30,
             height: 30,
             borderRadius: 15,
             backgroundColor: "gainsboro",
           }}
+          onPress={() => navigate("Settings")}
         />
       </View>
 
@@ -82,17 +64,6 @@ const HomeScreen = () => {
       }`}</BoldText>
 
       <SearchBar placeholder="Search" onChangeText={() => {}} />
-
-      <PrimaryButton
-        title={
-          loading ? (
-            <ActivityIndicator color={Colors[theme].background} />
-          ) : (
-            "Log out"
-          )
-        }
-        onPress={() => handleLogout()}
-      />
     </View>
   );
 };
