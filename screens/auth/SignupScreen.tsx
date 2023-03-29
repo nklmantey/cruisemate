@@ -10,6 +10,7 @@ import Colors from "../../constants/Colors";
 import { auth } from "../../config/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useAuthStore } from "../../store/useAuthStore";
+import { showMessage } from "react-native-flash-message";
 
 const SignupScreen = () => {
   const [email, setEmail] = useState<string>("");
@@ -20,24 +21,22 @@ const SignupScreen = () => {
 
   const theme = useColorScheme();
   const { navigate }: any = useNavigation();
-  const setUser = useAuthStore((state) => state.setUser);
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
+    setLoading(true);
+
     try {
-      setLoading(true);
-
-      createUserWithEmailAndPassword(auth, email, password)
+      await createUserWithEmailAndPassword(auth, email.trim(), password)
         .then((userCredential) => {
-          const user = userCredential.user;
-          setUser({
-            email: user.email,
-            id: user.uid,
-            name: fullName,
-            number: phone,
+          showMessage({
+            message: "Account successfully created!",
+            type: "success",
+            icon: "success",
           });
-          setTimeout(() => {
-            navigate("Login");
-          }, 1000);
+          navigate("Login", {
+            fullName: fullName,
+            phone: phone,
+          });
         })
         .catch((error) => {
           console.log(error);

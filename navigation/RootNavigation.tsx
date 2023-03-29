@@ -8,11 +8,12 @@ import {
   DefaultTheme,
 } from "@react-navigation/native";
 import { useEffect, useState } from "react";
+import { useAuthStore } from "../store/useAuthStore";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const RootNavigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) => {
-  let user = false;
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
 
   return (
     <NavigationContainer
@@ -23,7 +24,7 @@ const RootNavigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) => {
           headerShown: false,
         }}
       >
-        {user ? (
+        {isLoggedIn ? (
           <Stack.Screen name="HomeStack" component={HomeNavigation} />
         ) : (
           <Stack.Screen name="AuthStack" component={AuthNavigation} />
