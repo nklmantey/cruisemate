@@ -9,7 +9,6 @@ import { ActivityIndicator } from "react-native";
 import Colors from "../../constants/Colors";
 import { auth } from "../../config/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useAuthStore } from "../../store/useAuthStore";
 import { showMessage } from "react-native-flash-message";
 
 const SignupScreen = () => {
@@ -33,8 +32,9 @@ const SignupScreen = () => {
             type: "success",
             icon: "success",
           });
+
           navigate("Login", {
-            fullName: fullName,
+            fullName: fullName.trim(),
             phone: phone,
           });
         })
