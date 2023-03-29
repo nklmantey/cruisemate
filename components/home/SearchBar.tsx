@@ -25,7 +25,7 @@ const SearchBar = ({
           alignSelf: "center",
           borderColor: Colors[theme].gray,
           borderWidth: 1,
-          borderRadius: 5,
+          borderRadius: 8,
           marginVertical: 24,
           paddingHorizontal: 8,
         }}
@@ -37,14 +37,20 @@ const SearchBar = ({
           style={[
             styles.input,
             {
-              borderWidth: 0,
               color: Colors[theme].text,
-              flex: 1,
             },
           ]}
         />
 
-        <Ionicons name="search" color={Colors[theme].gray} size={20} />
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            marginHorizontal: 5,
+          }}
+        >
+          <Ionicons name="search" color={Colors[theme].gray} size={20} />
+        </View>
       </View>
     </View>
   );
@@ -56,7 +62,7 @@ const styles = StyleSheet.create({
   input: {
     padding: 12,
     fontSize: 16,
-    width: "100%",
+    width: "85%",
     alignSelf: "center",
     fontFamily: "AirbnbMedium",
   },
