@@ -7,7 +7,6 @@ import {
   DarkTheme,
   DefaultTheme,
 } from "@react-navigation/native";
-import { useEffect, useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 
 const Stack = createStackNavigator<RootStackParamList>();

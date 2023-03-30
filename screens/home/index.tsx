@@ -1,5 +1,4 @@
-import { ActivityIndicator, TouchableOpacity, View } from "react-native";
-import { PrimaryButton } from "../../components/ui/Button";
+import { TouchableOpacity, View } from "react-native";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
@@ -7,12 +6,11 @@ import { BoldText } from "../../components/StyledText";
 import { greetings } from "../../utils";
 import SearchBar from "../../components/home/SearchBar";
 import { useAuthStore } from "../../store/useAuthStore";
-import { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import PopularCarsCard from "../../components/home/PopularCarsCard";
 
 const HomeScreen = () => {
   const theme = useColorScheme();
-  const [loading, setLoading] = useState<boolean>(false);
   const user = useAuthStore((state) => state.user);
 
   const { navigate }: any = useNavigation();
@@ -64,6 +62,11 @@ const HomeScreen = () => {
       }`}</BoldText>
 
       <SearchBar placeholder="Search" onChangeText={() => {}} />
+
+      <View>
+        <BoldText style={{ fontSize: 16, marginBottom: 8 }}>Car Types</BoldText>
+        <PopularCarsCard />
+      </View>
     </View>
   );
 };
