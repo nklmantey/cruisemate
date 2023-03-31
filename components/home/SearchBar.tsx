@@ -12,7 +12,6 @@ const SearchBar = ({
   placeholder: string;
   onChangeText(): void;
 }) => {
-  const [visible, setVisible] = useState<boolean>(false);
   const theme = useColorScheme();
 
   return (
@@ -26,7 +25,7 @@ const SearchBar = ({
           borderColor: Colors[theme].gray,
           borderWidth: 1,
           borderRadius: 8,
-          marginVertical: 24,
+          marginVertical: 16,
           paddingHorizontal: 8,
         }}
       >

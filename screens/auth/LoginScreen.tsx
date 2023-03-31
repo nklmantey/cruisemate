@@ -7,16 +7,16 @@ import { Input, PwdInput } from "../../components/ui/Input";
 import useColorScheme from "../../hooks/useColorScheme";
 import { ActivityIndicator } from "react-native";
 import Colors from "../../constants/Colors";
-import { auth } from "../../config/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../../config/firebase";
+import { signInWithEmailAndPassword, User } from "firebase/auth";
 import { useAuthStore } from "../../store/useAuthStore";
 import { showMessage } from "react-native-flash-message";
+import { doc, getDoc } from "firebase/firestore";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const { params }: any = useRoute();
 
   const theme = useColorScheme();
   const { navigate }: any = useNavigation();
@@ -28,14 +28,10 @@ const LoginScreen = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email.trim(), password)
-        .then((userCredential) => {
+        .then(async (userCredential) => {
           const user = userCredential.user;
-          setUser({
-            email: user.email,
-            id: user.uid,
-            name: params?.fullName,
-            number: params?.phone,
-          });
+          await getUserData(user);
+
           showMessage({
             message: "Success!",
             type: "success",
@@ -53,10 +49,27 @@ const LoginScreen = () => {
     }
   };
 
+  const getUserData = async (user: User) => {
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      setUser({
+        email: user.email,
+        id: user.uid,
+        name: docSnap.data().fullName,
+        number: docSnap.data().phone,
+      });
+    } else {
+      console.log("No such document!");
+    }
+  };
+
   return (
     <View
       style={{
-        padding: 16,
+        paddingHorizontal: 16,
+        paddingVertical: 24,
         flex: 1,
         justifyContent: "space-between",
         alignItems: "center",

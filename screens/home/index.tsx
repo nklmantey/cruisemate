@@ -64,7 +64,9 @@ const HomeScreen = () => {
       <SearchBar placeholder="Search" onChangeText={() => {}} />
 
       <View>
-        <BoldText style={{ fontSize: 16, marginBottom: 8 }}>Car Types</BoldText>
+        <BoldText style={{ fontSize: 16, marginVertical: 8 }}>
+          Car Types
+        </BoldText>
         <PopularCarsCard />
       </View>
     </View>

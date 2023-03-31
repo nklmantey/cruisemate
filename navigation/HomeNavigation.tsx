@@ -16,11 +16,16 @@ const HomeNavigation = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerLeft: () => (
-          <TouchableOpacity onPress={() => goBack()}>
-            <Ionicons name="arrow-back" color={Colors[theme].text} size={20} />
-          </TouchableOpacity>
-        ),
+        headerLeft: () =>
+          canGoBack() ? (
+            <TouchableOpacity onPress={() => goBack()}>
+              <Ionicons
+                name="arrow-back"
+                color={Colors[theme].text}
+                size={20}
+              />
+            </TouchableOpacity>
+          ) : null,
         headerTitleStyle: {
           fontFamily: "AirbnbBold",
           fontSize: 16,

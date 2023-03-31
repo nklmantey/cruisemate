@@ -7,9 +7,10 @@ import { Input, PwdInput } from "../../components/ui/Input";
 import useColorScheme from "../../hooks/useColorScheme";
 import { ActivityIndicator } from "react-native";
 import Colors from "../../constants/Colors";
-import { auth } from "../../config/firebase";
+import { auth, db } from "../../config/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { showMessage } from "react-native-flash-message";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 const SignupScreen = () => {
   const [email, setEmail] = useState<string>("");
@@ -26,17 +27,20 @@ const SignupScreen = () => {
 
     try {
       await createUserWithEmailAndPassword(auth, email.trim(), password)
-        .then((userCredential) => {
+        .then(async (userCredential) => {
+          await addUserToDb(userCredential?.user?.uid);
           showMessage({
             message: "Account successfully created!",
             type: "success",
             icon: "success",
           });
 
-          navigate("Login", {
-            fullName: fullName.trim(),
-            phone: phone,
-          });
+          navigate("Login");
+
+          setEmail("");
+          setPassword("");
+          setFullName("");
+          setPhone("");
         })
         .catch((error) => {
           console.log(error);
@@ -48,10 +52,19 @@ const SignupScreen = () => {
     }
   };
 
+  const addUserToDb = async (uid: string) => {
+    await setDoc(doc(db, "users", uid), {
+      email: email.trim(),
+      phone: phone,
+      fullName: fullName,
+    });
+  };
+
   return (
     <View
       style={{
-        padding: 16,
+        paddingHorizontal: 16,
+        paddingVertical: 24,
         flex: 1,
         justifyContent: "space-between",
         alignItems: "center",
@@ -97,7 +110,10 @@ const SignupScreen = () => {
               "Create account"
             )
           }
-          onPress={() => handleSignup()}
+          onPress={() => {
+            handleSignup();
+            // addUserToDb();
+          }}
         />
         <SecondaryButton
           title="Sign up with Google"
