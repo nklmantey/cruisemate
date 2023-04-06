@@ -135,9 +135,9 @@ export default function SettingsScreen({ navigation }: any) {
           </Row>
         </TouchableOpacity>
 
-        <RegularText style={{ color: Colors[theme].text, marginTop: 20 }}>
+        <BoldText style={{ color: Colors[theme].text, marginTop: 20 }}>
           MISCELLANEOUS
-        </RegularText>
+        </BoldText>
         <Row
           style={{
             marginTop: 10,
@@ -238,10 +238,6 @@ export default function SettingsScreen({ navigation }: any) {
             marginBottom: 20,
           }}
         >
-          <Image
-            style={{ width: 50, height: 50, marginBottom: 8 }}
-            source={{ uri: "https://github.com/nklmantey.png" }}
-          />
           <RegularText style={{ color: Colors[theme].text }}>
             All Rights Reserved, Cruisemate &#8482;
           </RegularText>

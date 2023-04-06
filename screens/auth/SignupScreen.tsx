@@ -36,7 +36,8 @@ const SignupScreen = () => {
           });
 
           navigate("Login");
-
+        })
+        .finally(() => {
           setEmail("");
           setPassword("");
           setFullName("");

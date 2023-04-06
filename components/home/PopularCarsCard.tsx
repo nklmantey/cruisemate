@@ -35,35 +35,34 @@ const PopularCarsCard = () => {
         backgroundColor: Colors[theme].grayLight,
         padding: 16,
         height: 300,
-        borderRadius: 20,
+        borderRadius: 16,
         justifyContent: "space-between",
       }}
     >
       <Text>PopularCarsCard</Text>
-      <View
-        style={{
-          position: "absolute",
-          bottom: 8,
-          right: 8,
-          width: 50,
-          height: 50,
-          borderRadius: 25,
-          backgroundColor: Colors[theme].text,
-          alignItems: "center",
-          justifyContent: "center",
-          zIndex: 99,
-        }}
-      >
-        <Ionicons
-          name="arrow-forward"
-          color={Colors[theme].background}
-          size={25}
-        />
-      </View>
 
       <View>
-        <BoldText>BMW X5</BoldText>
-        <PricePerDay price="10" />
+        <BoldText style={{ color: Colors[theme].background }}>BMW X5</BoldText>
+
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <PricePerDay price="10" />
+          <View
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 20,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: Colors[theme].text,
+            }}
+          >
+            <Ionicons
+              name="arrow-forward"
+              color={Colors[theme].background}
+              size={20}
+            />
+          </View>
+        </View>
       </View>
     </View>
   );

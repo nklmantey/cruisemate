@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from "react-native";
+import { FlatList, TouchableOpacity, View } from "react-native";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
@@ -8,6 +8,7 @@ import SearchBar from "../../components/home/SearchBar";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useNavigation } from "@react-navigation/native";
 import PopularCarsCard from "../../components/home/PopularCarsCard";
+import { CarTypes } from "../../constants/Data";
 
 const HomeScreen = () => {
   const theme = useColorScheme();
@@ -63,11 +64,33 @@ const HomeScreen = () => {
 
       <SearchBar placeholder="Search" onChangeText={() => {}} />
 
-      <View>
+      <View style={{ width: "100%" }}>
         <BoldText style={{ fontSize: 16, marginVertical: 8 }}>
           Car Types
         </BoldText>
-        <PopularCarsCard />
+
+        <FlatList
+          data={CarTypes}
+          renderItem={({ item }) => (
+            <View
+              key={item.id}
+              style={{
+                backgroundColor: Colors[theme].text,
+                padding: 8,
+                borderRadius: 8,
+                alignItems: "center",
+                justifyContent: "center",
+                marginLeft: item.id === 1 ? 0 : 8,
+              }}
+            >
+              <BoldText style={{ color: Colors[theme].background }}>
+                {item.type}
+              </BoldText>
+            </View>
+          )}
+          horizontal
+        />
+        {/* <PopularCarsCard /> */}
       </View>
     </View>
   );
