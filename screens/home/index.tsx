@@ -1,4 +1,4 @@
-import { FlatList, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, TouchableOpacity, View } from "react-native";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
@@ -58,15 +58,15 @@ const HomeScreen = () => {
         </BoldText>
       </View>
 
-      <BoldText style={{ fontSize: 24 }}>{`${greetings()} ${
-        user?.name
-      }`}</BoldText>
+      <BoldText style={{ fontSize: 24 }}>
+        {`${greetings()} ${user?.name}`}
+      </BoldText>
 
       <SearchBar placeholder="Search" onChangeText={() => {}} />
 
       <View style={{ width: "100%" }}>
         <BoldText style={{ fontSize: 16, marginVertical: 8 }}>
-          Car Types
+          Car types
         </BoldText>
 
         <FlatList
@@ -77,7 +77,7 @@ const HomeScreen = () => {
               style={{
                 backgroundColor: Colors[theme].text,
                 padding: 8,
-                borderRadius: 8,
+                borderRadius: 5,
                 alignItems: "center",
                 justifyContent: "center",
                 marginLeft: item.id === 1 ? 0 : 8,
@@ -89,8 +89,14 @@ const HomeScreen = () => {
             </View>
           )}
           horizontal
+          showsHorizontalScrollIndicator={false}
         />
-        {/* <PopularCarsCard /> */}
+
+        <BoldText style={{ fontSize: 16, marginTop: 24 }}>
+          Popular cars around you
+        </BoldText>
+
+        <PopularCarsCard name="BMW" price="10" />
       </View>
     </View>
   );

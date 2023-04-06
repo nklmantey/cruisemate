@@ -1,11 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  TransitionPresets,
+  createStackNavigator,
+} from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import HomeScreen from "../screens/home";
-import SettingsScreen from "../screens/home/Settings";
-import Colors from "../constants/Colors";
-import useColorScheme from "../hooks/useColorScheme";
+import HomeScreen from "../../screens/home";
+import SettingsScreen from "../../screens/home/Settings";
+import Colors from "../../constants/Colors";
+import useColorScheme from "../../hooks/useColorScheme";
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -44,6 +47,10 @@ const HomeNavigation = () => {
         headerStyle: {
           backgroundColor: Colors[theme].background,
         },
+        ...TransitionPresets.SlideFromRightIOS,
+        animationEnabled: true,
+        gestureEnabled: true,
+        gestureDirection: "horizontal",
       }}
     >
       <Stack.Screen

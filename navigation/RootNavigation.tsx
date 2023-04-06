@@ -1,13 +1,13 @@
 import { ColorSchemeName } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import AuthNavigation from "./AuthNavigation";
-import HomeNavigation from "./HomeNavigation";
 import {
   NavigationContainer,
   DarkTheme,
   DefaultTheme,
 } from "@react-navigation/native";
 import { useAuthStore } from "../store/useAuthStore";
+import TabNavigation from "./TabNavigation";
+import AuthNavigation from "./AuthNavigation";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -24,7 +24,7 @@ const RootNavigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) => {
         }}
       >
         {isLoggedIn ? (
-          <Stack.Screen name="HomeStack" component={HomeNavigation} />
+          <Stack.Screen name="TabStack" component={TabNavigation} />
         ) : (
           <Stack.Screen name="AuthStack" component={AuthNavigation} />
         )}

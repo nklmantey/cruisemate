@@ -26,7 +26,7 @@ const PricePerDay = ({ price }: { price: string }) => {
   );
 };
 
-const PopularCarsCard = () => {
+const PopularCarsCard = ({ name, price }: { name: string; price: string }) => {
   const theme = useColorScheme();
 
   return (
@@ -34,18 +34,19 @@ const PopularCarsCard = () => {
       style={{
         backgroundColor: Colors[theme].grayLight,
         padding: 16,
-        height: 300,
+        height: 250,
         borderRadius: 16,
         justifyContent: "space-between",
+        marginVertical: 8,
       }}
     >
       <Text>PopularCarsCard</Text>
 
       <View>
-        <BoldText style={{ color: Colors[theme].background }}>BMW X5</BoldText>
+        <BoldText style={{ color: Colors[theme].background }}>{name}</BoldText>
 
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <PricePerDay price="10" />
+          <PricePerDay price={price} />
           <View
             style={{
               width: 40,
