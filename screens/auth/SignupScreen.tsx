@@ -10,7 +10,7 @@ import Colors from "../../constants/Colors";
 import { auth, db } from "../../config/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { showMessage } from "react-native-flash-message";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
 const SignupScreen = () => {
   const [email, setEmail] = useState<string>("");
