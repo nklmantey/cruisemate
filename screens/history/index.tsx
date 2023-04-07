@@ -14,7 +14,7 @@ const HistoryScreen = () => {
     >
       <EmptyState>
         <BoldText style={{ fontSize: 24, textAlign: "center", marginTop: 16 }}>
-          No rental history
+          No rental history!
         </BoldText>
       </EmptyState>
     </View>
