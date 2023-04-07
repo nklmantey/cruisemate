@@ -7,12 +7,13 @@ import useCachedResources from "./hooks/useCachedResources";
 import FlashMessage from "react-native-flash-message";
 import { useEffect, useState } from "react";
 import * as Location from "expo-location";
+import { useAuthStore } from "./store/useAuthStore";
 
 const App = () => {
   const colorScheme = useColorScheme();
   const isLoadingComplete = useCachedResources();
-  const [userLat, setUserLat] = useState<any>();
-  const [userLng, setUserLng] = useState<any>();
+  const setUser = useAuthStore((state) => state.setUser);
+  const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
     const getUserLocation = async () => {
@@ -23,13 +24,16 @@ const App = () => {
       }
 
       const location = await Location.getCurrentPositionAsync({});
-      setUserLat(location?.coords?.latitude);
-      setUserLng(location?.coords?.longitude);
-      console.log(userLat, userLng);
+      setUser({
+        location: {
+          lat: location?.coords?.latitude,
+          lng: location?.coords?.longitude,
+        },
+      });
     };
 
     getUserLocation();
-  }, [userLat, userLng]);
+  }, [user?.location?.lat, user?.location?.lng]);
 
   if (!isLoadingComplete) {
     return null;

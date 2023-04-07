@@ -18,3 +18,6 @@ type HomeStackParamList = {
   Home: undefined;
   Settings: undefined;
 };
+type MapStackParamList = {
+  Map: undefined;
+};

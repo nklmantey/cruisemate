@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import AsyncStorage, {
   useAsyncStorage,
@@ -224,7 +225,9 @@ export default function SettingsScreen({ navigation }: any) {
               <Ionicons size={17} name="log-out" color={"white"} />
             </View>
             <View style={{ paddingHorizontal: 10, flex: 1 }}>
-              <BoldText style={{ fontSize: 16 }}>Logout</BoldText>
+              <BoldText style={{ fontSize: 16 }}>
+                {loading ? <ActivityIndicator /> : "Logout"}
+              </BoldText>
             </View>
             <Ionicons color={Colors[theme].text} name="chevron-forward" />
           </Row>

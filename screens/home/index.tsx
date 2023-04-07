@@ -1,4 +1,4 @@
-import { FlatList, Image, TouchableOpacity, View } from "react-native";
+import { FlatList, TouchableOpacity, View } from "react-native";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
@@ -9,12 +9,23 @@ import { useAuthStore } from "../../store/useAuthStore";
 import { useNavigation } from "@react-navigation/native";
 import PopularCarsCard from "../../components/home/PopularCarsCard";
 import { CarTypes } from "../../constants/Data";
+import { useState } from "react";
 
 const HomeScreen = () => {
   const theme = useColorScheme();
   const user = useAuthStore((state) => state.user);
 
   const { navigate }: any = useNavigation();
+  // function genRandomString(length: number) {
+  //   var chars =
+  //     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  //   var charLength = chars.length;
+  //   var result = "";
+  //   for (var i = 0; i < length; i++) {
+  //     result += chars.charAt(Math.floor(Math.random() * charLength));
+  //   }
+  //   return result;
+  // }
 
   return (
     <View
@@ -97,6 +108,29 @@ const HomeScreen = () => {
         </BoldText>
 
         <PopularCarsCard name="BMW" price="10" />
+
+        {/* <PrimaryButton
+          title={loading ? <ActivityIndicator /> : "Update"}
+          onPress={async () => {
+            setLoading(true);
+            await setDoc(
+              doc(
+                db,
+                "users",
+                `${user?.id}`,
+                "history",
+                `${genRandomString(28)}`
+              ),
+              {
+                rideCancelled: "yes",
+              },
+              {
+                merge: true
+              }
+            );
+            setLoading(false);
+          }}
+        /> */}
       </View>
     </View>
   );

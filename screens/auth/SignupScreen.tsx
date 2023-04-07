@@ -22,6 +22,14 @@ const SignupScreen = () => {
   const theme = useColorScheme();
   const { navigate }: any = useNavigation();
 
+  const addUserToDb = async (uid: string) => {
+    await setDoc(doc(db, "users", uid), {
+      email: email.trim(),
+      phone: phone,
+      fullName: fullName,
+    });
+  };
+
   const handleSignup = async () => {
     setLoading(true);
 
@@ -51,14 +59,6 @@ const SignupScreen = () => {
     } catch (e) {
       console.log(e);
     }
-  };
-
-  const addUserToDb = async (uid: string) => {
-    await setDoc(doc(db, "users", uid), {
-      email: email.trim(),
-      phone: phone,
-      fullName: fullName,
-    });
   };
 
   return (
@@ -113,7 +113,6 @@ const SignupScreen = () => {
           }
           onPress={() => {
             handleSignup();
-            // addUserToDb();
           }}
         />
         <SecondaryButton
