@@ -1,7 +1,10 @@
 import React from "react";
 import { View, Image } from "react-native";
+import useColorScheme from "../hooks/useColorScheme";
 
 const EmptyState = ({ children }: any) => {
+  const theme = useColorScheme();
+
   return (
     <View
       style={{
@@ -12,9 +15,13 @@ const EmptyState = ({ children }: any) => {
       }}
     >
       <Image
-        style={{ height: 150 }}
+        style={{ height: 200 }}
         resizeMode="contain"
-        source={require("../assets/images/empty.png")}
+        source={
+          theme === "dark"
+            ? require("../assets/emptylight.png")
+            : require("../assets/emptydark.png")
+        }
       />
       {children}
     </View>

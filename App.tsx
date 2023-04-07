@@ -5,7 +5,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import useColorScheme from "./hooks/useColorScheme";
 import useCachedResources from "./hooks/useCachedResources";
 import FlashMessage from "react-native-flash-message";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import * as Location from "expo-location";
 import { useAuthStore } from "./store/useAuthStore";
 
@@ -33,7 +33,7 @@ const App = () => {
     };
 
     getUserLocation();
-  }, [user?.location?.lat, user?.location?.lng]);
+  }, []);
 
   if (!isLoadingComplete) {
     return null;

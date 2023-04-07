@@ -39,6 +39,10 @@ export default function SettingsScreen({ navigation }: any) {
         email: null,
         name: null,
         number: null,
+        location: {
+          lat: null,
+          lng: null,
+        },
       });
       setIsLoggedIn(false);
       setLoading(false);

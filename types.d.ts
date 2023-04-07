@@ -21,3 +21,6 @@ type HomeStackParamList = {
 type MapStackParamList = {
   Map: undefined;
 };
+type HistoryStackParamList = {
+  History: undefined;
+};
