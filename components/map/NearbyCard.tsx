@@ -1,5 +1,5 @@
-import { View } from "react-native";
-import { BoldText, MediumText } from "../StyledText";
+import { View } from "../Themed";
+import { BoldText } from "../StyledText";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import { Image } from "expo-image";

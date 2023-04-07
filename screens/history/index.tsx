@@ -20,4 +20,5 @@ const HistoryScreen = () => {
     </View>
   );
 };
+
 export default HistoryScreen;

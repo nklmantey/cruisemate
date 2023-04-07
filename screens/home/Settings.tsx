@@ -8,10 +8,6 @@ import {
   Alert,
   ActivityIndicator,
 } from "react-native";
-import AsyncStorage, {
-  useAsyncStorage,
-} from "@react-native-async-storage/async-storage";
-
 import { Row } from "../../components/Row";
 import { BoldText, RegularText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
@@ -44,6 +40,7 @@ export default function SettingsScreen({ navigation }: any) {
           lng: null,
         },
       });
+
       setIsLoggedIn(false);
       setLoading(false);
     } catch (e) {
@@ -230,7 +227,11 @@ export default function SettingsScreen({ navigation }: any) {
             </View>
             <View style={{ paddingHorizontal: 10, flex: 1 }}>
               <BoldText style={{ fontSize: 16 }}>
-                {loading ? <ActivityIndicator /> : "Logout"}
+                {loading ? (
+                  <ActivityIndicator color={Colors[theme].background} />
+                ) : (
+                  "Logout"
+                )}
               </BoldText>
             </View>
             <Ionicons color={Colors[theme].text} name="chevron-forward" />
@@ -256,15 +257,3 @@ export default function SettingsScreen({ navigation }: any) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
-  },
-});

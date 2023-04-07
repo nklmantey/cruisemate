@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Image } from "react-native";
+import { View } from "./Themed";
+import { Image } from "react-native";
 import useColorScheme from "../hooks/useColorScheme";
 
 const EmptyState = ({ children }: any) => {

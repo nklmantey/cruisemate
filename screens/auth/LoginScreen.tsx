@@ -60,9 +60,9 @@ const LoginScreen = () => {
         name: docSnap.data().fullName,
         number: docSnap.data().phone,
       });
-    } else {
-      console.log("No such document!");
     }
+    console.log("No such document!");
+    return;
   };
 
   return (

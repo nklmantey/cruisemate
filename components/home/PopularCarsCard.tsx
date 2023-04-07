@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text } from "../Themed";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
