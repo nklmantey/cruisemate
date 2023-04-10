@@ -12,6 +12,7 @@ import { signInWithEmailAndPassword, User } from "firebase/auth";
 import { useAuthStore } from "../../store/useAuthStore";
 import { showMessage } from "react-native-flash-message";
 import { doc, getDoc } from "firebase/firestore";
+import { Ionicons } from "@expo/vector-icons";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState<string>("");
@@ -35,7 +36,17 @@ const LoginScreen = () => {
           showMessage({
             message: "Success!",
             type: "success",
-            icon: "success",
+            icon: (props) => (
+              <Ionicons
+                name="checkmark-circle-outline"
+                color="white"
+                size={20}
+                {...props}
+              />
+            ),
+            titleStyle: {
+              fontFamily: "AirbnbMedium",
+            },
           });
           setIsLoggedIn(true);
         })
@@ -47,7 +58,17 @@ const LoginScreen = () => {
             showMessage({
               message: "Invalid credentials! Try again",
               type: "danger",
-              icon: "danger",
+              icon: (props) => (
+                <Ionicons
+                  name="close-circle-outline"
+                  color="white"
+                  size={20}
+                  {...props}
+                />
+              ),
+              titleStyle: {
+                fontFamily: "AirbnbMedium",
+              },
             });
           }
           console.log(error);
@@ -55,7 +76,7 @@ const LoginScreen = () => {
 
       setLoading(false);
     } catch (e) {
-      alert(e);
+      console.log(e);
     }
   };
 
@@ -71,8 +92,9 @@ const LoginScreen = () => {
         number: docSnap.data().phone,
         avatar: docSnap.data().avatar_url,
       });
+    } else {
+      console.log("No such document");
     }
-    console.log("No such document!");
     return;
   };
 
