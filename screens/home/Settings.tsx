@@ -15,8 +15,9 @@ import useColorScheme from "../../hooks/useColorScheme";
 import Colors from "../../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useAuthStore } from "../../store/useAuthStore";
-import { signOut } from "firebase/auth";
-import { auth } from "../../config/firebase";
+import { User, signOut } from "firebase/auth";
+import { auth, db } from "../../config/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function SettingsScreen({ navigation }: any) {
   const theme = useColorScheme();
@@ -32,6 +33,7 @@ export default function SettingsScreen({ navigation }: any) {
       await signOut(auth);
       setUser({
         id: null,
+        avatar: null,
         email: null,
         name: null,
         number: null,
@@ -60,14 +62,30 @@ export default function SettingsScreen({ navigation }: any) {
         style={{
           flexDirection: "row",
           alignItems: "center",
-          columnGap: 5,
+          gap: 15,
           marginBottom: 16,
         }}
       >
-        <Image
-          source={{ uri: "https://github.com/nklmantey.png " }}
-          style={{ width: 50, height: 50, borderRadius: 25 }}
-        />
+        {user?.avatar ? (
+          <Image
+            source={{ uri: user?.avatar }}
+            style={{ width: 50, height: 50, borderRadius: 25 }}
+          />
+        ) : (
+          <View
+            style={{
+              width: 50,
+              height: 50,
+              borderRadius: 25,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 1,
+              borderColor: Colors[theme].grayLight,
+            }}
+          >
+            <Ionicons name="person" color="black" size={20} />
+          </View>
+        )}
         <View>
           <BoldText style={{ fontSize: 18 }}>{user?.name}</BoldText>
           <RegularText>{user?.email}</RegularText>

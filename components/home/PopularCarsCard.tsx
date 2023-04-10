@@ -1,8 +1,9 @@
-import { View, Text } from "../Themed";
+import { View } from "../Themed";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
 import { BoldText, MediumText } from "../StyledText";
+import { Image } from "expo-image";
 
 const PricePerDay = ({ price }: { price: string }) => {
   const theme = useColorScheme();
@@ -11,8 +12,7 @@ const PricePerDay = ({ price }: { price: string }) => {
     <View
       style={{
         padding: 8,
-        width: "30%",
-        marginVertical: 4,
+        width: "40%",
         borderRadius: 5,
         backgroundColor: Colors[theme].text,
         alignItems: "center",
@@ -40,28 +40,38 @@ const PopularCarsCard = ({ name, price }: { name: string; price: string }) => {
         marginVertical: 8,
       }}
     >
-      <Text>PopularCarsCard</Text>
-
-      <View>
-        <BoldText style={{ color: Colors[theme].background }}>{name}</BoldText>
-
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+      <Image
+        contentFit="cover"
+        transition={1000}
+        source={{
+          uri: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2Fyc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+        }}
+        style={{ width: "100%", height: "75%", borderRadius: 15 }}
+      />
+      <View
+        style={{
+          backgroundColor: "transparent",
+          flex: 1,
+          justifyContent: "center",
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: "transparent",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 10,
+          }}
+        >
           <PricePerDay price={price} />
           <View
             style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: Colors[theme].text,
+              flexDirection: "row",
+              gap: 5,
+              backgroundColor: "transparent",
             }}
           >
-            <Ionicons
-              name="arrow-forward"
-              color={Colors[theme].background}
-              size={20}
-            />
+            <BoldText>{name}</BoldText>
           </View>
         </View>
       </View>

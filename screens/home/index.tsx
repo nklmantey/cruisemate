@@ -107,7 +107,7 @@ const HomeScreen = () => {
           Popular cars around you
         </BoldText>
 
-        <PopularCarsCard name="BMW" price="10" />
+        <PopularCarsCard name="BMW Sports Coupe" price="10" />
 
         {/* <PrimaryButton
           title={loading ? <ActivityIndicator /> : "Update"}

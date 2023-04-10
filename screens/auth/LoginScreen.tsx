@@ -40,12 +40,22 @@ const LoginScreen = () => {
           setIsLoggedIn(true);
         })
         .catch((error) => {
+          if (
+            error.code === "auth/wrong-password" ||
+            error.code === "auth/user-not-found"
+          ) {
+            showMessage({
+              message: "Invalid credentials! Try again",
+              type: "danger",
+              icon: "danger",
+            });
+          }
           console.log(error);
         });
 
       setLoading(false);
     } catch (e) {
-      console.log(e);
+      alert(e);
     }
   };
 
@@ -59,6 +69,7 @@ const LoginScreen = () => {
         id: user.uid,
         name: docSnap.data().fullName,
         number: docSnap.data().phone,
+        avatar: docSnap.data().avatar_url,
       });
     }
     console.log("No such document!");

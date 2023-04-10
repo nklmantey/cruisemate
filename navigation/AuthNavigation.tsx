@@ -37,8 +37,7 @@ const AuthNavigation = () => {
           textAlign: "center",
         },
         headerLeftContainerStyle: {
-          marginLeft: 4,
-          marginRight: 4,
+          marginLeft: 8,
           alignItems: "center",
           justifyContent: "center",
         },

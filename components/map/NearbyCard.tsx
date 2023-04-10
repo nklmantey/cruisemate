@@ -27,7 +27,6 @@ const NearbyCard = () => {
       <Image
         style={{ width: "100%", height: 80, borderRadius: 8 }}
         source={blurhash}
-        // placeholder={blurhash}
         contentFit="cover"
         transition={1000}
       />

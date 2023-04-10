@@ -13,7 +13,6 @@ const App = () => {
   const colorScheme = useColorScheme();
   const isLoadingComplete = useCachedResources();
   const setUser = useAuthStore((state) => state.setUser);
-  const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
     const getUserLocation = async () => {

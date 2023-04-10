@@ -19,16 +19,11 @@ const HomeNavigation = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerLeft: () =>
-          canGoBack() ? (
-            <TouchableOpacity onPress={() => goBack()}>
-              <Ionicons
-                name="arrow-back"
-                color={Colors[theme].text}
-                size={20}
-              />
-            </TouchableOpacity>
-          ) : null,
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => goBack()}>
+            <Ionicons name="arrow-back" color={Colors[theme].text} size={20} />
+          </TouchableOpacity>
+        ),
         headerTitleStyle: {
           fontFamily: "AirbnbBold",
           fontSize: 16,
@@ -36,8 +31,7 @@ const HomeNavigation = () => {
           textAlign: "center",
         },
         headerLeftContainerStyle: {
-          marginLeft: 4,
-          marginRight: 4,
+          marginLeft: 8,
           alignItems: "center",
           justifyContent: "center",
         },
