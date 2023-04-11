@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   Platform,
-  StyleSheet,
   Image,
   TouchableOpacity,
   Alert,
@@ -15,16 +14,19 @@ import useColorScheme from "../../hooks/useColorScheme";
 import Colors from "../../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { useAuthStore } from "../../store/useAuthStore";
-import { User, signOut } from "firebase/auth";
-import { auth, db } from "../../config/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { signOut } from "firebase/auth";
+import { auth } from "../../config/firebase";
+import { useNavigation } from "@react-navigation/native";
 
-export default function SettingsScreen({ navigation }: any) {
+const SettingsScreen = () => {
   const theme = useColorScheme();
+  const { navigate }: any = useNavigation();
+
   const user = useAuthStore((state) => state.user);
-  const [loading, setLoading] = useState<boolean>(false);
   const setUser = useAuthStore((state) => state.setUser);
   const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn);
+
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleLogout = async () => {
     setLoading(true);
@@ -274,4 +276,6 @@ export default function SettingsScreen({ navigation }: any) {
       <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
     </View>
   );
-}
+};
+
+export default SettingsScreen;
