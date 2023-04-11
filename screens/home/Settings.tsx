@@ -68,12 +68,7 @@ const SettingsScreen = () => {
           marginBottom: 16,
         }}
       >
-        {user?.avatar ? (
-          <Image
-            source={{ uri: user?.avatar }}
-            style={{ width: 50, height: 50, borderRadius: 25 }}
-          />
-        ) : (
+        {!user?.avatar || user?.avatar === null ? (
           <View
             style={{
               width: 50,
@@ -87,6 +82,11 @@ const SettingsScreen = () => {
           >
             <Ionicons name="person" color="black" size={20} />
           </View>
+        ) : (
+          <Image
+            source={{ uri: user?.avatar }}
+            style={{ width: 50, height: 50, borderRadius: 25 }}
+          />
         )}
         <View>
           <BoldText style={{ fontSize: 18 }}>{user?.name}</BoldText>
@@ -271,9 +271,6 @@ const SettingsScreen = () => {
           </RegularText>
         </View>
       </View>
-
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
     </View>
   );
 };

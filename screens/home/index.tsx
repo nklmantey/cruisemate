@@ -1,4 +1,4 @@
-import { FlatList, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, TouchableOpacity, View } from "react-native";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
@@ -44,15 +44,28 @@ const HomeScreen = () => {
       >
         <Ionicons name="menu" color={Colors[theme].text} size={20} />
         <BoldText>Home</BoldText>
-        <TouchableOpacity
-          style={{
-            width: 30,
-            height: 30,
-            borderRadius: 15,
-            backgroundColor: "gainsboro",
-          }}
-          onPress={() => navigate("Settings")}
-        />
+        {!user?.avatar || user?.avatar === null ? (
+          <View
+            style={{
+              width: 50,
+              height: 50,
+              borderRadius: 25,
+              alignItems: "center",
+              justifyContent: "center",
+              borderWidth: 1,
+              borderColor: Colors[theme].grayLight,
+            }}
+          >
+            <Ionicons name="person" color="black" size={20} />
+          </View>
+        ) : (
+          <TouchableOpacity onPress={() => navigate("Settings")}>
+            <Image
+              source={{ uri: user?.avatar }}
+              style={{ width: 30, height: 30, borderRadius: 15 }}
+            />
+          </TouchableOpacity>
+        )}
       </View>
 
       <View
@@ -107,7 +120,11 @@ const HomeScreen = () => {
           Popular cars around you
         </BoldText>
 
-        <PopularCarsCard name="BMW Sports Coupe" price="10" />
+        <PopularCarsCard
+          name="BMW Sports Coupe"
+          price="10"
+          onPress={() => alert("pressed")}
+        />
 
         {/* <PrimaryButton
           title={loading ? <ActivityIndicator /> : "Update"}

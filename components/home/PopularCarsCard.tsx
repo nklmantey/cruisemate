@@ -1,9 +1,9 @@
 import { View } from "../Themed";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
-import { Ionicons } from "@expo/vector-icons";
 import { BoldText, MediumText } from "../StyledText";
 import { Image } from "expo-image";
+import { TouchableOpacity } from "react-native";
 
 const PricePerDay = ({ price }: { price: string }) => {
   const theme = useColorScheme();
@@ -26,18 +26,27 @@ const PricePerDay = ({ price }: { price: string }) => {
   );
 };
 
-const PopularCarsCard = ({ name, price }: { name: string; price: string }) => {
+const PopularCarsCard = ({
+  name,
+  price,
+  onPress,
+}: {
+  name: string;
+  price: string;
+  onPress(): void;
+}) => {
   const theme = useColorScheme();
 
   return (
-    <View
+    <TouchableOpacity
+      onPress={onPress}
       style={{
         backgroundColor: Colors[theme].grayLight,
-        padding: 16,
+        padding: 8,
         height: 250,
         borderRadius: 16,
-        justifyContent: "space-between",
         marginVertical: 8,
+        gap: 10,
       }}
     >
       <Image
@@ -66,16 +75,16 @@ const PopularCarsCard = ({ name, price }: { name: string; price: string }) => {
           <PricePerDay price={price} />
           <View
             style={{
-              flexDirection: "row",
-              gap: 5,
               backgroundColor: "transparent",
+              flex: 1,
+              alignItems: "center",
             }}
           >
             <BoldText>{name}</BoldText>
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
