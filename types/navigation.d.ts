@@ -17,6 +17,7 @@ type TabStackParamList = {
 type HomeStackParamList = {
   Home: undefined;
   Settings: undefined;
+  CarDetails: undefined;
 };
 type MapStackParamList = {
   Map: undefined;

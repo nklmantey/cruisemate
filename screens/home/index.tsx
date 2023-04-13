@@ -123,7 +123,7 @@ const HomeScreen = () => {
         <PopularCarsCard
           name="BMW Sports Coupe"
           price="10"
-          onPress={() => alert("pressed")}
+          // onPress={() => navigate("CarDetails")}
         />
 
         {/* <PrimaryButton
