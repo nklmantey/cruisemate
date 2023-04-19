@@ -14,7 +14,7 @@ export interface User {
   };
 }
 
-export interface AuthStore {
+interface AuthStore {
   user: User | null;
   setUser: (partialUser: Partial<User>) => void;
   isLoggedIn: boolean;
