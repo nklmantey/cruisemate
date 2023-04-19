@@ -12,12 +12,12 @@ type TabStackParamList = {
   HomeStack: undefined;
   MapStack: undefined;
   HistoryStack: undefined;
-  // Profile: undefined;
 };
 type HomeStackParamList = {
   Home: undefined;
   Settings: undefined;
   CarDetails: undefined;
+  CarRental: undefined;
 };
 type MapStackParamList = {
   Map: undefined;

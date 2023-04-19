@@ -10,11 +10,12 @@ import SettingsScreen from "../../screens/home/Settings";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import CarDetails from "../../screens/home/CarDetails";
+import CarRental from "../../screens/home/CarRental";
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
 const HomeNavigation = () => {
-  const { canGoBack, goBack } = useNavigation();
+  const { goBack } = useNavigation();
   const theme = useColorScheme();
 
   return (
@@ -60,6 +61,11 @@ const HomeNavigation = () => {
         name="CarDetails"
         component={CarDetails}
         options={{ title: "Car Details" }}
+      />
+      <Stack.Screen
+        name="CarRental"
+        component={CarRental}
+        options={{ title: "Rental Booking" }}
       />
     </Stack.Navigator>
   );

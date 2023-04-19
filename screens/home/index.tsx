@@ -9,7 +9,6 @@ import { useAuthStore } from "../../store/useAuthStore";
 import { useNavigation } from "@react-navigation/native";
 import PopularCarsCard from "../../components/home/PopularCarsCard";
 import { CarTypes } from "../../constants/Data";
-import { useState } from "react";
 
 const HomeScreen = () => {
   const theme = useColorScheme();
