@@ -36,17 +36,7 @@ const LoginScreen = () => {
           showMessage({
             message: "Success!",
             type: "success",
-            icon: (props) => (
-              <Ionicons
-                name="checkmark-circle-outline"
-                color="white"
-                size={20}
-                {...props}
-              />
-            ),
-            titleStyle: {
-              fontFamily: "AirbnbMedium",
-            },
+            icon: "success",
           });
           setIsLoggedIn(true);
         })
@@ -56,19 +46,9 @@ const LoginScreen = () => {
             error.code === "auth/user-not-found"
           ) {
             showMessage({
-              message: "Invalid credentials! Try again",
+              message: "Invalid credentials, try again !",
               type: "danger",
-              icon: (props) => (
-                <Ionicons
-                  name="close-circle-outline"
-                  color="white"
-                  size={20}
-                  {...props}
-                />
-              ),
-              titleStyle: {
-                fontFamily: "AirbnbMedium",
-              },
+              icon: "danger",
             });
           }
           console.log(error);
@@ -86,7 +66,7 @@ const LoginScreen = () => {
 
     if (docSnap.exists()) {
       setUser({
-        email: user.email,
+        email: user.email!,
         id: user.uid,
         name: docSnap.data().fullName,
         number: docSnap.data().phone,

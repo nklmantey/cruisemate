@@ -3,14 +3,14 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export interface User {
-  id: string | null;
-  avatar: string | null;
-  email: string | null;
-  name: string | null;
-  number: string | null;
+  id: string;
+  avatar: string;
+  email: string;
+  name: string;
+  number: string;
   location: {
-    lat: number | null;
-    lng: number | null;
+    lat: number;
+    lng: number;
   };
 }
 
@@ -24,7 +24,17 @@ interface AuthStore {
 export const useAuthStore = create(
   persist<AuthStore>(
     (set, _) => ({
-      user: null,
+      user: {
+        id: "",
+        avatar: "",
+        email: "",
+        name: "",
+        number: "",
+        location: {
+          lat: 0,
+          lng: 0,
+        },
+      },
       isLoggedIn: false,
       setUser: (partialUser) =>
         set((state) => ({
@@ -33,7 +43,7 @@ export const useAuthStore = create(
       setIsLoggedIn: (isLoggedIn: boolean) => set((state) => ({ isLoggedIn })),
     }),
     {
-      name: "user-store",
+      name: "cruisemate-user-store",
       storage: createJSONStorage(() => AsyncStorage),
     }
   )

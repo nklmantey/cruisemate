@@ -44,7 +44,8 @@ const HomeScreen = () => {
         <Ionicons name="menu" color={Colors[theme].text} size={20} />
         <BoldText>Home</BoldText>
         {!user?.avatar || user?.avatar === null ? (
-          <View
+          <TouchableOpacity
+            onPress={() => navigate("Settings")}
             style={{
               width: 50,
               height: 50,
@@ -55,8 +56,8 @@ const HomeScreen = () => {
               borderColor: Colors[theme].grayLight,
             }}
           >
-            <Ionicons name="person" color="black" size={20} />
-          </View>
+            <Ionicons name="person" color="#fff" size={20} />
+          </TouchableOpacity>
         ) : (
           <TouchableOpacity onPress={() => navigate("Settings")}>
             <Image

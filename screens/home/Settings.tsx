@@ -34,14 +34,14 @@ const SettingsScreen = () => {
     try {
       await signOut(auth);
       setUser({
-        id: null,
-        avatar: null,
-        email: null,
-        name: null,
-        number: null,
+        id: "",
+        avatar: "",
+        email: "",
+        name: "",
+        number: "",
         location: {
-          lat: null,
-          lng: null,
+          lat: 0,
+          lng: 0,
         },
       });
 

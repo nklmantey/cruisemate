@@ -23,8 +23,8 @@ const MapScreen = () => {
         showsUserLocation
         followsUserLocation
         initialRegion={{
-          latitude: user?.location?.lat,
-          longitude: user?.location?.lng,
+          latitude: user?.location?.lat!,
+          longitude: user?.location?.lng!,
           latitudeDelta: 0.01,
           longitudeDelta: 0.01,
         }}
