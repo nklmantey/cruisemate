@@ -112,7 +112,7 @@ const SettingsScreen = () => {
                 width: 30,
                 justifyContent: "center",
                 alignItems: "center",
-                borderRadius: 5,
+                borderRadius: 8,
                 backgroundColor: "#eb2150",
               }}
             >
@@ -141,7 +141,7 @@ const SettingsScreen = () => {
                 width: 30,
                 justifyContent: "center",
                 alignItems: "center",
-                borderRadius: 5,
+                borderRadius: 8,
                 backgroundColor: "#992992",
               }}
             >
@@ -173,7 +173,7 @@ const SettingsScreen = () => {
               width: 30,
               justifyContent: "center",
               alignItems: "center",
-              borderRadius: 5,
+              borderRadius: 8,
               backgroundColor: "#246ce0",
             }}
           >
@@ -200,7 +200,7 @@ const SettingsScreen = () => {
               width: 30,
               justifyContent: "center",
               alignItems: "center",
-              borderRadius: 5,
+              borderRadius: 8,
               backgroundColor: "#278a34",
             }}
           >
@@ -239,7 +239,7 @@ const SettingsScreen = () => {
                 width: 30,
                 justifyContent: "center",
                 alignItems: "center",
-                borderRadius: 5,
+                borderRadius: 8,
                 backgroundColor: "#242c00",
               }}
             >

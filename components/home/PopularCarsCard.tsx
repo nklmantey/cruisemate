@@ -14,7 +14,7 @@ const PricePerDay = ({ price }: { price: string }) => {
       style={{
         padding: 8,
         width: "40%",
-        borderRadius: 5,
+        borderRadius: 8,
         backgroundColor: Colors[theme].background,
         alignItems: "center",
         justifyContent: "center",

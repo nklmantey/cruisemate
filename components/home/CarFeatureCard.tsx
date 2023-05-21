@@ -23,7 +23,7 @@ const CarFeatureCard = () => {
             padding: 2,
             width: 40,
             height: 40,
-            borderRadius: 5,
+            borderRadius: 8,
             alignItems: "center",
             justifyContent: "center",
           }}
@@ -43,7 +43,7 @@ const CarFeatureCard = () => {
             padding: 2,
             width: 40,
             height: 40,
-            borderRadius: 5,
+            borderRadius: 8,
             alignItems: "center",
             justifyContent: "center",
           }}
@@ -63,7 +63,7 @@ const CarFeatureCard = () => {
             padding: 2,
             width: 40,
             height: 40,
-            borderRadius: 5,
+            borderRadius: 8,
             alignItems: "center",
             justifyContent: "center",
           }}
@@ -83,7 +83,7 @@ const CarFeatureCard = () => {
             padding: 2,
             width: 40,
             height: 40,
-            borderRadius: 5,
+            borderRadius: 8,
             alignItems: "center",
             justifyContent: "center",
           }}

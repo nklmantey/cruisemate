@@ -37,7 +37,7 @@ const CarDetails = () => {
           <View
             style={{
               marginTop: 8,
-              borderRadius: 5,
+              borderRadius: 8,
               borderWidth: 1,
               borderColor: Colors[theme].gray,
               padding: 8,
@@ -50,7 +50,7 @@ const CarDetails = () => {
               style={{
                 width: 50,
                 height: 50,
-                borderRadius: 5,
+                borderRadius: 8,
                 backgroundColor: Colors[theme].grayLight,
               }}
             />

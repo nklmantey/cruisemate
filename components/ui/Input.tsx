@@ -97,7 +97,7 @@ const PwdInput = ({ label, placeholder, onChangeText }: InputProps) => {
           borderColor: Colors[theme].gray,
           borderWidth: 0.5,
           justifyContent: "space-between",
-          borderRadius: 5,
+          borderRadius: 8,
         }}
       >
         <TextInput
@@ -111,7 +111,7 @@ const PwdInput = ({ label, placeholder, onChangeText }: InputProps) => {
               borderWidth: 0,
               color: Colors[theme].text,
               width: "85%",
-              borderRadius: 5,
+              borderRadius: 8,
             },
           ]}
         />
@@ -137,80 +137,16 @@ const PwdInput = ({ label, placeholder, onChangeText }: InputProps) => {
   );
 };
 
-type RadioInputProps = {
-  label?: string;
-  radioOption: string;
-  bgCol: string;
-  onPress(): void;
-};
-const RadioInput = ({
-  label,
-  radioOption,
-  bgCol,
-  onPress,
-}: RadioInputProps) => {
-  const theme = useColorScheme();
-
-  return (
-    <View
-      style={{
-        marginVertical: 8,
-        flex: 1,
-      }}
-    >
-      <RegularText>{label}</RegularText>
-
-      <View
-        style={[
-          styles.input,
-          {
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          },
-        ]}
-      >
-        <RegularText>{radioOption}</RegularText>
-        <TouchableOpacity style={styles.radioBtnContainer} onPress={onPress}>
-          <View
-            style={[
-              styles.radioButton,
-              {
-                backgroundColor: bgCol,
-                borderColor: Colors[theme].text,
-              },
-            ]}
-          />
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
-};
-export { Input, NumInput, PwdInput, RadioInput };
+export { Input, NumInput, PwdInput };
 
 const styles = StyleSheet.create({
   input: {
     padding: 12,
     fontSize: 16,
     borderWidth: 0.5,
-    borderRadius: 5,
+    borderRadius: 8,
     width: "100%",
     alignSelf: "center",
     fontFamily: "AirbnbMedium",
-  },
-
-  radioBtnContainer: {
-    borderWidth: 1,
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  radioButton: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
   },
 });

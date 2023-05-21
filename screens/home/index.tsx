@@ -100,7 +100,7 @@ const HomeScreen = () => {
               style={{
                 backgroundColor: Colors[theme].text,
                 padding: 8,
-                borderRadius: 5,
+                borderRadius: 8,
                 alignItems: "center",
                 justifyContent: "center",
                 marginLeft: item.id === 1 ? 0 : 8,
