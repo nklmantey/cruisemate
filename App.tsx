@@ -37,7 +37,7 @@ const App = () => {
     getUserLocation();
   }, []);
 
-  console.log(user);
+  // console.log(user);
 
   if (!isLoadingComplete) {
     return null;

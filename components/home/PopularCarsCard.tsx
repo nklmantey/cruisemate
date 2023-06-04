@@ -4,7 +4,12 @@ import useColorScheme from "../../hooks/useColorScheme";
 import { BoldText, MediumText } from "../StyledText";
 import { Image } from "expo-image";
 import { TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+
+type Props = {
+  name: string;
+  price: string;
+};
 
 const PricePerDay = ({ price }: { price: string }) => {
   const theme = useColorScheme();
@@ -27,17 +32,9 @@ const PricePerDay = ({ price }: { price: string }) => {
   );
 };
 
-const PopularCarsCard = ({
-  name,
-  price,
-}: // onPress,
-{
-  name: string;
-  price: string;
-  // onPress(): void;
-}) => {
+const PopularCarsCard = ({ name, price }: Props) => {
   const theme = useColorScheme();
-  const { navigate }: any = useNavigation();
+  const { navigate }: NavigationProp<HomeStackParamList> = useNavigation();
   const IMAGE_URI =
     "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2Fyc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60";
 

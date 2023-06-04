@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { MediumText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
@@ -20,7 +20,7 @@ const SignupScreen = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const theme = useColorScheme();
-  const { navigate }: any = useNavigation();
+  const { navigate }: NavigationProp<AuthStackParamList> = useNavigation();
 
   const addUserToDb = async (uid: string) => {
     await setDoc(doc(db, "users", uid), {
@@ -111,13 +111,7 @@ const SignupScreen = () => {
               "Create account"
             )
           }
-          onPress={() => {
-            handleSignup();
-          }}
-        />
-        <SecondaryButton
-          title="Sign up with Google"
-          // onPress={() => navigate("Login")}
+          onPress={handleSignup}
         />
         <View
           style={{

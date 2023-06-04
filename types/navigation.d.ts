@@ -4,6 +4,7 @@ type RootStackParamList = {
   TabStack: undefined;
 };
 type AuthStackParamList = {
+  Welcome: undefined;
   Login: undefined;
   Signup: undefined;
   ExtraSignup: undefined;
@@ -16,7 +17,7 @@ type TabStackParamList = {
 type HomeStackParamList = {
   Home: undefined;
   Settings: undefined;
-  CarDetails: undefined;
+  CarDetails: undefined | { source: string; name: string };
   CarRental: undefined;
 };
 type MapStackParamList = {

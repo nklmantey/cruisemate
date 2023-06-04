@@ -1,4 +1,8 @@
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  NavigationProp,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { useState } from "react";
 import { MediumText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
@@ -20,7 +24,7 @@ const LoginScreen = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const theme = useColorScheme();
-  const { navigate }: any = useNavigation();
+  const { navigate }: NavigationProp<AuthStackParamList> = useNavigation();
   const setUser = useAuthStore((state) => state.setUser);
   const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn);
 
@@ -118,11 +122,7 @@ const LoginScreen = () => {
               "Log in"
             )
           }
-          onPress={() => handleLogin()}
-        />
-        <SecondaryButton
-          title="Log in with Google"
-          // onPress={() => navigate("Login")}
+          onPress={handleLogin}
         />
         <View
           style={{

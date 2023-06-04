@@ -16,11 +16,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { useAuthStore } from "../../store/useAuthStore";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebase";
-import { useNavigation } from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 
 const SettingsScreen = () => {
   const theme = useColorScheme();
-  const { navigate }: any = useNavigation();
+  const { navigate }: NavigationProp<HomeStackParamList> = useNavigation();
 
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
@@ -221,7 +221,7 @@ const SettingsScreen = () => {
               { text: "No" },
               {
                 text: "Yes",
-                onPress: () => handleLogout(),
+                onPress: handleLogout,
               },
             ]);
           }}

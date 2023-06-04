@@ -1,4 +1,8 @@
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  NavigationProp,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { BoldText, MediumText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import useColorScheme from "../../hooks/useColorScheme";
@@ -10,7 +14,7 @@ import { PrimaryButton } from "../../components/ui/Button";
 const CarDetails = () => {
   const theme = useColorScheme();
   const { params }: any = useRoute();
-  const { navigate }: any = useNavigation();
+  const { navigate }: NavigationProp<HomeStackParamList> = useNavigation();
 
   return (
     <View

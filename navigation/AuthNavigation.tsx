@@ -9,6 +9,7 @@ import useColorScheme from "../hooks/useColorScheme";
 import { useNavigation } from "@react-navigation/native";
 import LoginScreen from "../screens/auth/LoginScreen";
 import SignupScreen from "../screens/auth/SignupScreen";
+import WelcomeScreen from "../screens/auth/WelcomeScreen";
 
 const Stack = createStackNavigator<AuthStackParamList>();
 
@@ -18,11 +19,11 @@ const AuthNavigation = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName="Login"
+      initialRouteName="Welcome"
       screenOptions={{
         headerLeft: () =>
           canGoBack() ? (
-            <TouchableOpacity onPress={() => goBack()}>
+            <TouchableOpacity onPress={goBack}>
               <Ionicons
                 name="arrow-back"
                 color={Colors[theme].text}
@@ -53,6 +54,11 @@ const AuthNavigation = () => {
         gestureDirection: "horizontal",
       }}
     >
+      <Stack.Screen
+        name="Welcome"
+        component={WelcomeScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="Signup" component={SignupScreen} />
     </Stack.Navigator>

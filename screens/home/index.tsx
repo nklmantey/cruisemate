@@ -6,7 +6,7 @@ import { BoldText } from "../../components/StyledText";
 import { greetings } from "../../utils";
 import SearchBar from "../../components/home/SearchBar";
 import { useAuthStore } from "../../store/useAuthStore";
-import { useNavigation } from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import PopularCarsCard from "../../components/home/PopularCarsCard";
 import { CarTypes } from "../../constants/Data";
 
@@ -14,7 +14,7 @@ const HomeScreen = () => {
   const theme = useColorScheme();
   const user = useAuthStore((state) => state.user);
 
-  const { navigate }: any = useNavigation();
+  const { navigate }: NavigationProp<HomeStackParamList> = useNavigation();
   // function genRandomString(length: number) {
   //   var chars =
   //     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

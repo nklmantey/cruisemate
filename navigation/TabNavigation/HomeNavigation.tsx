@@ -22,7 +22,7 @@ const HomeNavigation = () => {
     <Stack.Navigator
       screenOptions={{
         headerLeft: () => (
-          <TouchableOpacity onPress={() => goBack()}>
+          <TouchableOpacity onPress={goBack}>
             <Ionicons name="arrow-back" color={Colors[theme].text} size={20} />
           </TouchableOpacity>
         ),

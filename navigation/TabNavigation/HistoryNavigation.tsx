@@ -20,7 +20,7 @@ const HistoryNavigation = () => {
       screenOptions={{
         headerLeft: () =>
           canGoBack() ? (
-            <TouchableOpacity onPress={() => goBack()}>
+            <TouchableOpacity onPress={goBack}>
               <Ionicons
                 name="arrow-back"
                 color={Colors[theme].text}

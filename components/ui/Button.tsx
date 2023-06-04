@@ -1,23 +1,46 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  TextStyle,
+  TouchableOpacity,
+  ViewStyle,
+} from "react-native";
 import { BoldText } from "../StyledText";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 
-export function PrimaryButton(props: any) {
+type ButtonProps = {
+  title: string | JSX.Element;
+  style?: ViewStyle;
+  textStyle?: TextStyle;
+  onPress: () => void;
+};
+
+export function PrimaryButton({
+  title,
+  style,
+  textStyle,
+  onPress,
+}: ButtonProps) {
   const theme = useColorScheme();
 
   return (
     <TouchableOpacity
-      {...props}
-      style={[styles.primaryButton, { backgroundColor: Colors[theme].text }]}
+      onPress={onPress}
+      style={[
+        styles.primaryButton,
+        { backgroundColor: Colors[theme].text, ...style },
+      ]}
     >
       <BoldText
-        style={{
-          color: Colors[theme].background,
-          fontSize: 16,
-        }}
+        style={[
+          {
+            color: Colors[theme].background,
+            fontSize: 16,
+            ...textStyle,
+          },
+        ]}
       >
-        {props.title}
+        {title}
       </BoldText>
     </TouchableOpacity>
   );
