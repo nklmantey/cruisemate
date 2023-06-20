@@ -1,15 +1,13 @@
 import "react-native-gesture-handler";
-import { StatusBar } from "react-native";
+import { StatusBar, SafeAreaView, Platform } from "react-native";
 import RootNavigation from "./navigation/RootNavigation";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import useColorScheme from "./hooks/useColorScheme";
 import useCachedResources from "./hooks/useCachedResources";
 import FlashMessage from "react-native-flash-message";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import * as Location from "expo-location";
 import { useAuthStore } from "./store/useAuthStore";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect } from "@react-navigation/native";
 
 const App = () => {
   const colorScheme = useColorScheme();
@@ -45,15 +43,23 @@ const App = () => {
 
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle="default" />
-      <RootNavigation colorScheme={colorScheme} />
-      <FlashMessage
-        position="top"
-        floating
-        animated
-        titleStyle={{ fontFamily: "AirbnbMedium", fontSize: 16 }}
-        duration={3000}
-      />
+      <SafeAreaView
+        style={{
+          flex: 1,
+          backgroundColor: "black",
+          paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+        }}
+      >
+        <StatusBar barStyle="default" />
+        <RootNavigation colorScheme={colorScheme} />
+        <FlashMessage
+          position="top"
+          floating
+          animated
+          titleStyle={{ fontFamily: "SFProMedium", fontSize: 16 }}
+          duration={3000}
+        />
+      </SafeAreaView>
     </SafeAreaProvider>
   );
 };
