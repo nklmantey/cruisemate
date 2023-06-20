@@ -94,10 +94,7 @@ const PwdInput = ({ label, placeholder, onChangeText }: InputProps) => {
           alignItems: "center",
           width: "100%",
           alignSelf: "center",
-          borderColor: Colors[theme].gray,
-          borderWidth: 0.5,
           justifyContent: "space-between",
-          borderRadius: 8,
         }}
       >
         <TextInput
@@ -141,12 +138,13 @@ export { Input, NumInput, PwdInput };
 
 const styles = StyleSheet.create({
   input: {
-    padding: 12,
-    fontSize: 16,
-    borderWidth: 0.5,
-    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 16,
+    fontSize: 18,
+    // borderWidth: 0.5,
+    // borderRadius: 8,
     width: "100%",
     alignSelf: "center",
-    fontFamily: "AirbnbMedium",
+    fontFamily: "SFProMedium",
   },
 });

@@ -1,19 +1,23 @@
 import { Text, TextProps } from "./Themed";
 
-export function BoldText(props: TextProps) {
+export function ExtraBoldText(props: TextProps) {
   return (
-    <Text {...props} style={[props.style, { fontFamily: "AirbnbBold" }]} />
+    <Text {...props} style={[props.style, { fontFamily: "SFProExtraBold" }]} />
   );
+}
+
+export function BoldText(props: TextProps) {
+  return <Text {...props} style={[props.style, { fontFamily: "SFProBold" }]} />;
 }
 
 export function RegularText(props: TextProps) {
   return (
-    <Text {...props} style={[props.style, { fontFamily: "AirbnbRegular" }]} />
+    <Text {...props} style={[props.style, { fontFamily: "SFProRegular" }]} />
   );
 }
 
 export function MediumText(props: TextProps) {
   return (
-    <Text {...props} style={[props.style, { fontFamily: "AirbnbMedium" }]} />
+    <Text {...props} style={[props.style, { fontFamily: "SFProMedium" }]} />
   );
 }

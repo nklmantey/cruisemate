@@ -4,7 +4,11 @@ import {
   useRoute,
 } from "@react-navigation/native";
 import { useState } from "react";
-import { MediumText } from "../../components/StyledText";
+import {
+  BoldText,
+  ExtraBoldText,
+  MediumText,
+} from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import { PrimaryButton, SecondaryButton } from "../../components/ui/Button";
 import { Input, PwdInput } from "../../components/ui/Input";
@@ -17,6 +21,7 @@ import { useAuthStore } from "../../store/useAuthStore";
 import { showMessage } from "react-native-flash-message";
 import { doc, getDoc } from "firebase/firestore";
 import { Ionicons } from "@expo/vector-icons";
+import { Image } from "expo-image";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState<string>("");
@@ -85,17 +90,29 @@ const LoginScreen = () => {
   return (
     <View
       style={{
-        paddingHorizontal: 16,
-        paddingVertical: 24,
+        paddingHorizontal: 24,
+        paddingVertical: 28,
         flex: 1,
         justifyContent: "space-between",
         alignItems: "center",
       }}
     >
       <View style={{ width: "100%" }}>
-        <MediumText style={{ textAlign: "center" }}>
-          Enter your credentials to log in.
-        </MediumText>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 20,
+            marginBottom: 20,
+          }}
+        >
+          <Image
+            source={require("../../assets/login.svg")}
+            style={{ width: 80, height: 80 }}
+          />
+          <ExtraBoldText style={{ fontSize: 28 }}>Login</ExtraBoldText>
+        </View>
+
         <Input
           placeholder="Email"
           onChangeText={(e) => {
@@ -108,7 +125,9 @@ const LoginScreen = () => {
             setPassword(e);
           }}
         />
-        <MediumText style={{ textAlign: "right", marginVertical: 8 }}>
+        <MediumText
+          style={{ textAlign: "left", marginTop: 24, marginLeft: 12 }}
+        >
           Forgot your password?
         </MediumText>
       </View>

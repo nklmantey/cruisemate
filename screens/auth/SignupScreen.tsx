@@ -1,6 +1,6 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { MediumText } from "../../components/StyledText";
+import { ExtraBoldText, MediumText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import { PrimaryButton, SecondaryButton } from "../../components/ui/Button";
 import { Input, PwdInput } from "../../components/ui/Input";
@@ -11,6 +11,7 @@ import { auth, db } from "../../config/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { showMessage } from "react-native-flash-message";
 import { doc, setDoc } from "firebase/firestore";
+import { Image } from "expo-image";
 
 const SignupScreen = () => {
   const [email, setEmail] = useState<string>("");
@@ -72,9 +73,21 @@ const SignupScreen = () => {
       }}
     >
       <View style={{ width: "100%" }}>
-        <MediumText style={{ textAlign: "center" }}>
-          Enter your credentials to sign up.
-        </MediumText>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 20,
+            marginBottom: 20,
+          }}
+        >
+          <Image
+            source={require("../../assets/signup.svg")}
+            style={{ width: 80, height: 80 }}
+          />
+          <ExtraBoldText style={{ fontSize: 28 }}>Sign up</ExtraBoldText>
+        </View>
+
         <Input
           placeholder="Email"
           onChangeText={(e) => {

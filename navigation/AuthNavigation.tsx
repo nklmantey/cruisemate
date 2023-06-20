@@ -31,23 +31,7 @@ const AuthNavigation = () => {
               />
             </TouchableOpacity>
           ) : null,
-        headerTitleStyle: {
-          fontFamily: "AirbnbBold",
-          fontSize: 16,
-          alignSelf: "center",
-          textAlign: "center",
-        },
-        headerLeftContainerStyle: {
-          marginLeft: 8,
-          alignItems: "center",
-          justifyContent: "center",
-        },
-        headerTitleContainerStyle: {
-          width: "100%",
-        },
-        headerStyle: {
-          backgroundColor: Colors[theme].background,
-        },
+        headerShown: false,
         ...TransitionPresets.SlideFromRightIOS,
         animationEnabled: true,
         gestureEnabled: true,

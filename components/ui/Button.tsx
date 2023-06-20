@@ -35,7 +35,7 @@ export function PrimaryButton({
         style={[
           {
             color: Colors[theme].background,
-            fontSize: 16,
+            fontSize: 17,
             ...textStyle,
           },
         ]}
@@ -74,10 +74,10 @@ export function SecondaryButton(props: any) {
 const styles = StyleSheet.create({
   primaryButton: {
     width: "100%",
-    borderRadius: 8,
+    borderRadius: 12,
     alignSelf: "center",
     backgroundColor: "transparent",
-    height: 50,
+    height: 52,
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 8,

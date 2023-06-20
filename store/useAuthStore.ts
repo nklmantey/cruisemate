@@ -12,6 +12,7 @@ export interface User {
     lat: number;
     lng: number;
   };
+  isOnboarded: boolean;
 }
 
 interface AuthStore {
@@ -34,6 +35,7 @@ export const useAuthStore = create(
           lat: 0,
           lng: 0,
         },
+        isOnboarded: false,
       },
       isLoggedIn: false,
       setUser: (partialUser) =>
