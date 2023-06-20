@@ -9,6 +9,14 @@ const DotView = ({ id }: { id: number }) => {
         style={[
           styles.dotView,
           {
+            backgroundColor: id === 0 ? "white" : "grey",
+          },
+        ]}
+      />
+      <View
+        style={[
+          styles.dotView,
+          {
             backgroundColor: id === 1 ? "white" : "grey",
           },
         ]}
@@ -40,7 +48,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   dotViewContainer: {
-    justifyContent: "space-evenly",
+    alignItems: "center",
     flexDirection: "row",
     gap: 8,
   },

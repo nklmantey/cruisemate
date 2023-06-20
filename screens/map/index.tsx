@@ -19,6 +19,7 @@ const MapScreen = () => {
           height: screenHeight,
           position: "relative",
         }}
+        provider="google"
         showsMyLocationButton
         showsUserLocation
         followsUserLocation
@@ -30,7 +31,7 @@ const MapScreen = () => {
         }}
       />
 
-      <NearbyCard />
+      {/* <NearbyCard /> */}
     </View>
   );
 };

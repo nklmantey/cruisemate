@@ -8,7 +8,12 @@ import { Image } from "expo-image";
 const Onboarding = ({ id, title }: OnboardDataType) => {
   return (
     <View style={styles.container}>
-      {id === 1 ? (
+      {id === 0 ? (
+        <Image
+          source={require("../assets/icon.png")}
+          style={{ width: 120, height: 120, borderRadius: 20 }}
+        />
+      ) : id === 1 ? (
         <Image
           source={require("../assets/find.svg")}
           style={{ width: 120, height: 120 }}

@@ -11,14 +11,13 @@ import { PrimaryButton, SecondaryButton } from "../../components/ui/Button";
 import { FlatList } from "react-native-gesture-handler";
 import { OnboardData } from "../../constants/Data";
 import Onboarding from "../../components/Onboarding";
+import DotView from "../../components/onboarding/DotView";
 
 const WelcomeScreen = () => {
   const { navigate }: NavigationProp<AuthStackParamList> = useNavigation();
 
   return (
     <View style={styles.container}>
-      <Image source={require("../../assets/icon.png")} style={styles.logo} />
-
       <FlatList
         horizontal
         pagingEnabled

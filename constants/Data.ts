@@ -19,6 +19,10 @@ export const CarTypes = [
 
 export const OnboardData: OnboardDataType[] = [
   {
+    id: 0,
+    title: "Welcome to Cruisemate",
+  },
+  {
     id: 1,
     title: "Find and rent cars from the nearest dealers",
   },
