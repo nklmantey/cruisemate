@@ -1,5 +1,5 @@
 import "react-native-gesture-handler";
-import { StatusBar, SafeAreaView, Platform } from "react-native";
+import { StatusBar } from "react-native";
 import RootNavigation from "./navigation/RootNavigation";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import useColorScheme from "./hooks/useColorScheme";
@@ -13,7 +13,6 @@ const App = () => {
   const colorScheme = useColorScheme();
   const isLoadingComplete = useCachedResources();
   const setUser = useAuthStore((state) => state.setUser);
-  const user = useAuthStore((state) => state.user);
 
   const getUserLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -35,31 +34,21 @@ const App = () => {
     getUserLocation();
   }, []);
 
-  // console.log(user);
-
   if (!isLoadingComplete) {
     return null;
   }
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView
-        style={{
-          flex: 1,
-          backgroundColor: "black",
-          paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-        }}
-      >
-        <StatusBar barStyle="default" />
-        <RootNavigation colorScheme={colorScheme} />
-        <FlashMessage
-          position="top"
-          floating
-          animated
-          titleStyle={{ fontFamily: "SFProMedium", fontSize: 16 }}
-          duration={3000}
-        />
-      </SafeAreaView>
+      <StatusBar barStyle="default" />
+      <RootNavigation colorScheme={colorScheme} />
+      <FlashMessage
+        position="top"
+        floating
+        animated
+        titleStyle={{ fontFamily: "SFProMedium", fontSize: 16 }}
+        duration={3000}
+      />
     </SafeAreaProvider>
   );
 };

@@ -1,4 +1,12 @@
-import { FlatList, Image, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  Platform,
+  SafeAreaView,
+  StatusBar,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
@@ -8,125 +16,88 @@ import SearchBar from "../../components/home/SearchBar";
 import { useAuthStore } from "../../store/useAuthStore";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import PopularCarsCard from "../../components/home/PopularCarsCard";
-import { CarTypes } from "../../constants/Data";
 
 const HomeScreen = () => {
   const theme = useColorScheme();
   const user = useAuthStore((state) => state.user);
-
   const { navigate }: NavigationProp<HomeStackParamList> = useNavigation();
-  // function genRandomString(length: number) {
-  //   var chars =
-  //     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  //   var charLength = chars.length;
-  //   var result = "";
-  //   for (var i = 0; i < length; i++) {
-  //     result += chars.charAt(Math.floor(Math.random() * charLength));
-  //   }
-  //   return result;
-  // }
 
   return (
-    <View
+    <SafeAreaView
       style={{
         flex: 1,
-        padding: 16,
         backgroundColor: Colors[theme].background,
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
       }}
     >
       <View
         style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
+          flex: 1,
+          padding: 16,
+          backgroundColor: Colors[theme].background,
         }}
       >
-        <Ionicons name="menu" color={Colors[theme].text} size={20} />
-        <BoldText>Home</BoldText>
-        {!user?.avatar || user?.avatar === null ? (
-          <TouchableOpacity
-            onPress={() => navigate("Settings")}
-            style={{
-              width: 50,
-              height: 50,
-              borderRadius: 25,
-              alignItems: "center",
-              justifyContent: "center",
-              borderWidth: 1,
-              borderColor: Colors[theme].grayLight,
-            }}
-          >
-            <Ionicons name="person" color="#fff" size={20} />
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity onPress={() => navigate("Settings")}>
-            <Image
-              source={{ uri: user?.avatar }}
-              style={{ width: 30, height: 30, borderRadius: 15 }}
-            />
-          </TouchableOpacity>
-        )}
-      </View>
-
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          columnGap: 5,
-          marginVertical: 24,
-        }}
-      >
-        <Ionicons name="location" color={Colors[theme].gray} size={20} />
-        <BoldText style={{ color: Colors[theme].gray }}>
-          TF Hostels, Accra, Ghana
-        </BoldText>
-      </View>
-
-      <BoldText style={{ fontSize: 24 }}>
-        {`${greetings()} ${user?.name}`}
-      </BoldText>
-
-      <SearchBar placeholder="Search" onChangeText={() => {}} />
-
-      <View style={{ width: "100%" }}>
-        <BoldText style={{ fontSize: 16, marginVertical: 8 }}>
-          Car types
-        </BoldText>
-
-        <FlatList
-          data={CarTypes}
-          renderItem={({ item }) => (
-            <View
-              key={item.id}
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Ionicons name="menu" color={Colors[theme].text} size={20} />
+          {!user?.avatar || user?.avatar === null ? (
+            <TouchableOpacity
+              onPress={() => navigate("Settings")}
               style={{
-                backgroundColor: Colors[theme].text,
-                padding: 8,
-                borderRadius: 8,
+                width: 45,
+                height: 45,
+                borderRadius: 25,
                 alignItems: "center",
                 justifyContent: "center",
-                marginLeft: item.id === 1 ? 0 : 8,
+                borderWidth: 1,
+                borderColor: Colors[theme].grayLight,
               }}
             >
-              <BoldText style={{ color: Colors[theme].background }}>
-                {item.type}
-              </BoldText>
-            </View>
+              <Ionicons name="person" color={Colors[theme].gray} size={20} />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={() => navigate("Settings")}>
+              <Image
+                source={{ uri: user?.avatar }}
+                style={{ width: 30, height: 30, borderRadius: 15 }}
+              />
+            </TouchableOpacity>
           )}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-        />
+        </View>
 
-        <BoldText style={{ fontSize: 16, marginTop: 24 }}>
-          Popular cars around you
-        </BoldText>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            columnGap: 5,
+            marginVertical: 24,
+          }}
+        >
+          <Ionicons name="location" color={Colors[theme].gray} size={20} />
+          <BoldText style={{ color: Colors[theme].gray }}>
+            TF Hostels, Accra, Ghana
+          </BoldText>
+        </View>
 
-        <PopularCarsCard
-          name="BMW Sports Coupe"
-          price="10"
-          // onPress={() => navigate("CarDetails")}
-        />
+        <SearchBar placeholder="Search" onChangeText={() => {}} />
 
-        {/* <PrimaryButton
+        <View style={{ width: "100%" }}>
+          <BoldText style={{ fontSize: 16, marginTop: 24 }}>
+            Popular cars around you
+          </BoldText>
+
+          <PopularCarsCard
+            name="BMW Sports Coupe"
+            price="10"
+            // onPress={() => navigate("CarDetails")}
+          />
+
+          {/* <PrimaryButton
           title={loading ? <ActivityIndicator /> : "Update"}
           onPress={async () => {
             setLoading(true);
@@ -148,8 +119,9 @@ const HomeScreen = () => {
             setLoading(false);
           }}
         /> */}
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
