@@ -10,12 +10,14 @@ import { useNavigation } from "@react-navigation/native";
 import LoginScreen from "../screens/auth/LoginScreen";
 import SignupScreen from "../screens/auth/SignupScreen";
 import WelcomeScreen from "../screens/auth/WelcomeScreen";
+import { useAuthStore } from "../store/useAuthStore";
 
 const Stack = createStackNavigator<AuthStackParamList>();
 
 const AuthNavigation = () => {
   const theme = useColorScheme();
   const { canGoBack, goBack } = useNavigation();
+  const isOnboarded = useAuthStore((state) => state.user?.isOnboarded);
 
   return (
     <Stack.Navigator
@@ -39,7 +41,7 @@ const AuthNavigation = () => {
       }}
     >
       <Stack.Screen
-        name="Welcome"
+        name={isOnboarded ? "Login" : "Welcome"}
         component={WelcomeScreen}
         options={{ headerShown: false }}
       />
