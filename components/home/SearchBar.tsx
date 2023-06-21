@@ -24,11 +24,14 @@ const SearchBar = ({
           alignSelf: "center",
           borderColor: Colors[theme].gray,
           borderWidth: 1,
-          borderRadius: 8,
-          marginVertical: 16,
+          borderRadius: 12,
+          marginBottom: 16,
           paddingHorizontal: 8,
         }}
       >
+        <View style={{ alignItems: "center", marginLeft: 8 }}>
+          <Ionicons name="search" color={Colors[theme].gray} size={20} />
+        </View>
         <TextInput
           placeholder={placeholder}
           placeholderTextColor={Colors[theme].gray}
@@ -40,16 +43,6 @@ const SearchBar = ({
             },
           ]}
         />
-
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-            marginHorizontal: 5,
-          }}
-        >
-          <Ionicons name="search" color={Colors[theme].gray} size={20} />
-        </View>
       </View>
     </View>
   );
