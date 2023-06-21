@@ -25,9 +25,9 @@ const PricePerDay = ({ price }: { price: string }) => {
         justifyContent: "center",
       }}
     >
-      <MediumText style={{ color: Colors[theme].text }}>
+      <BoldText style={{ color: Colors[theme].text }}>
         ${price} per day
-      </MediumText>
+      </BoldText>
     </View>
   );
 };
@@ -47,8 +47,8 @@ const PopularCarsCard = ({ name, price }: Props) => {
         })
       }
       style={{
-        backgroundColor: Colors[theme].grayLight,
-        padding: 8,
+        backgroundColor: Colors[theme].text,
+        padding: 12,
         height: 250,
         borderRadius: 16,
         marginVertical: 8,

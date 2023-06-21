@@ -80,7 +80,7 @@ const SettingsScreen = () => {
               borderColor: Colors[theme].grayLight,
             }}
           >
-            <Ionicons name="person" color="black" size={20} />
+            <Ionicons name="person" color={Colors[theme].gray} size={20} />
           </View>
         ) : (
           <Image

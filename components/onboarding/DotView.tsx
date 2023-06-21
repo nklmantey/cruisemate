@@ -1,15 +1,19 @@
 import { StyleSheet } from "react-native";
 import { BoldText } from "../StyledText";
 import { View } from "../Themed";
+import useColorScheme from "../../hooks/useColorScheme";
+import Colors from "../../constants/Colors";
 
 const DotView = ({ id }: { id: number }) => {
+  const theme = useColorScheme();
+
   return (
     <View style={styles.dotViewContainer}>
       <View
         style={[
           styles.dotView,
           {
-            backgroundColor: id === 0 ? "white" : "grey",
+            backgroundColor: id === 0 ? Colors[theme].text : Colors[theme].gray,
           },
         ]}
       />
@@ -17,7 +21,7 @@ const DotView = ({ id }: { id: number }) => {
         style={[
           styles.dotView,
           {
-            backgroundColor: id === 1 ? "white" : "grey",
+            backgroundColor: id === 1 ? Colors[theme].text : Colors[theme].gray,
           },
         ]}
       />
@@ -25,7 +29,7 @@ const DotView = ({ id }: { id: number }) => {
         style={[
           styles.dotView,
           {
-            backgroundColor: id === 2 ? "white" : "grey",
+            backgroundColor: id === 2 ? Colors[theme].text : Colors[theme].gray,
           },
         ]}
       />
@@ -33,7 +37,7 @@ const DotView = ({ id }: { id: number }) => {
         style={[
           styles.dotView,
           {
-            backgroundColor: id === 3 ? "white" : "grey",
+            backgroundColor: id === 3 ? Colors[theme].text : Colors[theme].gray,
           },
         ]}
       />
