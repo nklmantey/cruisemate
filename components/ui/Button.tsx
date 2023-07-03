@@ -74,7 +74,7 @@ export function SecondaryButton(props: any) {
 const styles = StyleSheet.create({
   primaryButton: {
     width: "100%",
-    borderRadius: 12,
+    borderRadius: 8,
     alignSelf: "center",
     backgroundColor: "transparent",
     height: 52,

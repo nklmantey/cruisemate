@@ -21,14 +21,16 @@ const WelcomeScreen = () => {
       <FlatList
         horizontal
         pagingEnabled
-        snapToAlignment="start"
+        snapToAlignment="end"
         contentContainerStyle={styles.onboardContainer}
         data={OnboardData}
         renderItem={({ item }) => <Onboarding {...item} />}
         showsHorizontalScrollIndicator={false}
       />
 
-      <View style={{ width: "100%" }}>
+      <View
+        style={{ width: "100%", paddingHorizontal: 24, paddingVertical: 32 }}
+      >
         <PrimaryButton title="Get started" onPress={() => navigate("Signup")} />
         <SecondaryButton title="Log in" onPress={() => navigate("Login")} />
       </View>
@@ -42,7 +44,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     gap: 16,
-    padding: 24,
   },
   logo: {
     width: 80,

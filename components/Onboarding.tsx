@@ -40,7 +40,7 @@ const Onboarding = ({ id, title }: OnboardDataType) => {
 };
 const styles = StyleSheet.create({
   container: {
-    maxWidth: screenWidth,
+    width: screenWidth,
     paddingHorizontal: 24,
     alignItems: "center",
     gap: 20,

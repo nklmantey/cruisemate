@@ -24,9 +24,9 @@ const SearchBar = ({
           alignSelf: "center",
           borderColor: Colors[theme].gray,
           borderWidth: 1,
-          borderRadius: 12,
+          borderRadius: 8,
           marginBottom: 16,
-          paddingHorizontal: 8,
+          paddingHorizontal: 4,
         }}
       >
         <View style={{ alignItems: "center", marginLeft: 8 }}>
@@ -52,7 +52,7 @@ export default SearchBar;
 
 const styles = StyleSheet.create({
   input: {
-    padding: 12,
+    padding: 8,
     fontSize: 16,
     width: "85%",
     alignSelf: "center",

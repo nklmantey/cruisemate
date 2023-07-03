@@ -75,7 +75,7 @@ const HomeScreen = () => {
             flexDirection: "row",
             alignItems: "center",
             columnGap: 5,
-            marginVertical: 24,
+            marginTop: 24,
           }}
         >
           <Ionicons name="location" color={Colors[theme].gray} size={20} />
@@ -83,8 +83,6 @@ const HomeScreen = () => {
             TF Hostels, Accra, Ghana
           </BoldText>
         </View>
-
-        <SearchBar placeholder="Search" onChangeText={() => {}} />
 
         <View style={{ width: "100%" }}>
           <BoldText style={{ fontSize: 16, marginTop: 24 }}>
