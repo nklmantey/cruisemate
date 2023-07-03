@@ -14,13 +14,11 @@ const useCachedResources = () => {
 
         // Load fonts
         await Font.loadAsync({
-          // AirbnbBold: require("../assets/fonts/Airbnb-Bold.otf"),
-          // AirbnbRegular: require("../assets/fonts/Airbnb-Reguar.otf"),
-          // AirbnbMedium: require("../assets/fonts/Airbnb-Medium.otf"),
-          SFProExtraBold: require("../assets/fonts/SFProText-Black.otf"),
-          SFProBold: require("../assets/fonts/SFProText-Bold.otf"),
-          SFProMedium: require("../assets/fonts/SFProText-Medium.otf"),
-          SFProRegular: require("../assets/fonts/SFProText-Regular.otf"),
+          AirbnbBold: require("../assets/fonts/AirbnbCereal_W_Bd.otf"),
+          AirbnbRegular: require("../assets/fonts/AirbnbCereal_W_Lt.otf"),
+          AirbnbMedium: require("../assets/fonts/AirbnbCereal_W_Md.otf"),
+          AirbnbExtraBold: require("../assets/fonts/AirbnbCereal_W_XBd.otf"),
+          TiemposExtraBold: require("../assets/fonts/TiemposHeadline-Black.otf"),
           ...FontAwesome.font,
         });
       } catch (e) {
