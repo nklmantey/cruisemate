@@ -5,7 +5,12 @@ import { View } from "../../components/Themed";
 import { PrimaryButton, SecondaryButton } from "../../components/ui/Button";
 import { Input, PwdInput } from "../../components/ui/Input";
 import useColorScheme from "../../hooks/useColorScheme";
-import { ActivityIndicator } from "react-native";
+import {
+  ActivityIndicator,
+  Platform,
+  SafeAreaView,
+  StatusBar,
+} from "react-native";
 import Colors from "../../constants/Colors";
 import { auth, db } from "../../config/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -63,89 +68,97 @@ const SignupScreen = () => {
   };
 
   return (
-    <View
+    <SafeAreaView
       style={{
-        paddingHorizontal: 16,
-        paddingVertical: 24,
         flex: 1,
-        justifyContent: "space-between",
-        alignItems: "center",
+        backgroundColor: Colors[theme].background,
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
       }}
     >
-      <View style={{ width: "100%" }}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 20,
-            marginBottom: 20,
-          }}
-        >
-          <Image
-            source={require("../../assets/signup.svg")}
-            style={{ width: 80, height: 80 }}
-          />
-          <ExtraBoldText style={{ fontSize: 28 }}>Sign up</ExtraBoldText>
-        </View>
-
-        <Input
-          placeholder="Email"
-          onChangeText={(e) => {
-            setEmail(e);
-          }}
-        />
-        <Input
-          placeholder="Phone Number"
-          maxLength={10}
-          onChangeText={(e) => {
-            setPhone(e);
-          }}
-        />
-        <Input
-          placeholder="Full name"
-          onChangeText={(e) => {
-            setFullName(e);
-          }}
-        />
-        <PwdInput
-          placeholder="Password"
-          onChangeText={(e) => {
-            setPassword(e);
-          }}
-        />
-      </View>
-
-      <View style={{ width: "100%" }}>
-        <PrimaryButton
-          title={
-            loading ? (
-              <ActivityIndicator color={Colors[theme].background} />
-            ) : (
-              "Create account"
-            )
-          }
-          onPress={handleSignup}
-        />
-        <View
-          style={{
-            flexDirection: "row",
-            columnGap: 4,
-            alignSelf: "center",
-            marginVertical: 8,
-          }}
-        >
-          <MediumText>Already have an account?</MediumText>
-          <MediumText
+      <View
+        style={{
+          paddingHorizontal: 16,
+          paddingVertical: 24,
+          flex: 1,
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <View style={{ width: "100%" }}>
+          <View
             style={{
-              textDecorationLine: "underline",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 20,
+              marginBottom: 20,
             }}
-            onPress={() => navigate("Login")}
           >
-            Head to login
-          </MediumText>
+            <Image
+              source={require("../../assets/signup.svg")}
+              style={{ width: 80, height: 80 }}
+            />
+            <ExtraBoldText style={{ fontSize: 28 }}>Sign up</ExtraBoldText>
+          </View>
+
+          <Input
+            placeholder="Email"
+            onChangeText={(e) => {
+              setEmail(e);
+            }}
+          />
+          <Input
+            placeholder="Phone Number"
+            maxLength={10}
+            onChangeText={(e) => {
+              setPhone(e);
+            }}
+          />
+          <Input
+            placeholder="Full name"
+            onChangeText={(e) => {
+              setFullName(e);
+            }}
+          />
+          <PwdInput
+            placeholder="Password"
+            onChangeText={(e) => {
+              setPassword(e);
+            }}
+          />
+        </View>
+
+        <View style={{ width: "100%" }}>
+          <PrimaryButton
+            title={
+              loading ? (
+                <ActivityIndicator color={Colors[theme].background} />
+              ) : (
+                "Create account"
+              )
+            }
+            onPress={handleSignup}
+          />
+          <View
+            style={{
+              flexDirection: "row",
+              columnGap: 4,
+              alignSelf: "center",
+              marginVertical: 8,
+            }}
+          >
+            <MediumText>Already have an account?</MediumText>
+            <MediumText
+              style={{
+                textDecorationLine: "underline",
+              }}
+              onPress={() => navigate("Login")}
+            >
+              Head to login
+            </MediumText>
+          </View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

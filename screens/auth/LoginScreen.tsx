@@ -13,7 +13,12 @@ import { View } from "../../components/Themed";
 import { PrimaryButton, SecondaryButton } from "../../components/ui/Button";
 import { Input, PwdInput } from "../../components/ui/Input";
 import useColorScheme from "../../hooks/useColorScheme";
-import { ActivityIndicator } from "react-native";
+import {
+  ActivityIndicator,
+  Platform,
+  SafeAreaView,
+  StatusBar,
+} from "react-native";
 import Colors from "../../constants/Colors";
 import { auth, db } from "../../config/firebase";
 import { signInWithEmailAndPassword, User } from "firebase/auth";
@@ -52,7 +57,8 @@ const LoginScreen = () => {
         .catch((error) => {
           if (
             error.code === "auth/wrong-password" ||
-            error.code === "auth/user-not-found"
+            error.code === "auth/user-not-found" ||
+            error.code === "auth/invalid-email"
           ) {
             showMessage({
               message: "Invalid credentials, try again !",
@@ -88,81 +94,89 @@ const LoginScreen = () => {
   };
 
   return (
-    <View
+    <SafeAreaView
       style={{
-        paddingHorizontal: 24,
-        paddingVertical: 28,
         flex: 1,
-        justifyContent: "space-between",
-        alignItems: "center",
+        backgroundColor: Colors[theme].background,
+        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
       }}
     >
-      <View style={{ width: "100%" }}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 20,
-            marginBottom: 20,
-          }}
-        >
-          <Image
-            source={require("../../assets/login.svg")}
-            style={{ width: 80, height: 80 }}
-          />
-          <ExtraBoldText style={{ fontSize: 28 }}>Login</ExtraBoldText>
-        </View>
-
-        <Input
-          placeholder="Email"
-          onChangeText={(e) => {
-            setEmail(e);
-          }}
-        />
-        <PwdInput
-          placeholder="Password"
-          onChangeText={(e) => {
-            setPassword(e);
-          }}
-        />
-        <MediumText
-          style={{ textAlign: "left", marginTop: 24, marginLeft: 12 }}
-        >
-          Forgot your password?
-        </MediumText>
-      </View>
-
-      <View style={{ width: "100%" }}>
-        <PrimaryButton
-          title={
-            loading ? (
-              <ActivityIndicator color={Colors[theme].background} />
-            ) : (
-              "Log in"
-            )
-          }
-          onPress={handleLogin}
-        />
-        <View
-          style={{
-            flexDirection: "row",
-            columnGap: 4,
-            alignSelf: "center",
-            marginVertical: 8,
-          }}
-        >
-          <MediumText>Don't have an account?</MediumText>
-          <MediumText
+      <View
+        style={{
+          paddingHorizontal: 24,
+          paddingVertical: 28,
+          flex: 1,
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <View style={{ width: "100%" }}>
+          <View
             style={{
-              textDecorationLine: "underline",
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 20,
+              marginBottom: 20,
             }}
-            onPress={() => navigate("Signup")}
           >
-            Create one now
+            <Image
+              source={require("../../assets/login.svg")}
+              style={{ width: 80, height: 80 }}
+            />
+            <ExtraBoldText style={{ fontSize: 28 }}>Login</ExtraBoldText>
+          </View>
+
+          <Input
+            placeholder="Email"
+            onChangeText={(e) => {
+              setEmail(e);
+            }}
+          />
+          <PwdInput
+            placeholder="Password"
+            onChangeText={(e) => {
+              setPassword(e);
+            }}
+          />
+          <MediumText
+            style={{ textAlign: "left", marginTop: 24, marginLeft: 12 }}
+          >
+            Forgot your password?
           </MediumText>
         </View>
+
+        <View style={{ width: "100%" }}>
+          <PrimaryButton
+            title={
+              loading ? (
+                <ActivityIndicator color={Colors[theme].background} />
+              ) : (
+                "Log in"
+              )
+            }
+            onPress={handleLogin}
+          />
+          <View
+            style={{
+              flexDirection: "row",
+              columnGap: 4,
+              alignSelf: "center",
+              marginVertical: 8,
+            }}
+          >
+            <MediumText>Don't have an account?</MediumText>
+            <MediumText
+              style={{
+                textDecorationLine: "underline",
+              }}
+              onPress={() => navigate("Signup")}
+            >
+              Create one now
+            </MediumText>
+          </View>
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
