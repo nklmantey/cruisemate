@@ -1,8 +1,9 @@
-import { View } from "react-native";
+import { View, StatusBar, Image } from "react-native";
 import { screenHeight, screenWidth } from "../../constants/Dimensions";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { useAuthStore } from "../../store/useAuthStore";
 import NearbyCard from "../../components/map/NearbyCard";
+import Logo from "../../assets/icon.png";
 
 const MapScreen = () => {
   const user = useAuthStore((state) => state.user);
@@ -13,15 +14,17 @@ const MapScreen = () => {
         flex: 1,
       }}
     >
+      <StatusBar barStyle="default" />
+
       <MapView
         style={{
           width: screenWidth,
           height: screenHeight,
           position: "relative",
         }}
-        provider="google"
+        provider={undefined}
         showsMyLocationButton
-        showsUserLocation
+        showsUserLocation={true}
         followsUserLocation
         initialRegion={{
           latitude: user?.location?.lat!,
@@ -29,7 +32,15 @@ const MapScreen = () => {
           latitudeDelta: 0.01,
           longitudeDelta: 0.01,
         }}
-      />
+      >
+        <Marker
+          coordinate={{
+            latitude: user?.location.lat ?? 0,
+            longitude: user?.location.lng ?? 0,
+          }}
+          title="Joe's Car Rentals"
+        />
+      </MapView>
 
       {/* <NearbyCard /> */}
     </View>
