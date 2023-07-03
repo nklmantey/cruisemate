@@ -27,7 +27,7 @@ const HomeNavigation = () => {
           </TouchableOpacity>
         ),
         headerTitleStyle: {
-          fontFamily: "SFProBold",
+          fontFamily: "AirbnbBold",
           fontSize: 16,
           alignSelf: "center",
           textAlign: "center",

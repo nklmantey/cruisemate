@@ -145,6 +145,6 @@ const styles = StyleSheet.create({
     // borderRadius: 8,
     width: "100%",
     alignSelf: "center",
-    fontFamily: "SFProMedium",
+    fontFamily: "AirbnbMedium",
   },
 });
