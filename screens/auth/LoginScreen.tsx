@@ -1,14 +1,6 @@
-import {
-  NavigationProp,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import {
-  BoldText,
-  ExtraBoldText,
-  MediumText,
-} from "../../components/StyledText";
+import { ExtraBoldText, MediumText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import { PrimaryButton, SecondaryButton } from "../../components/ui/Button";
 import { Input, PwdInput } from "../../components/ui/Input";
@@ -25,7 +17,6 @@ import { signInWithEmailAndPassword, User } from "firebase/auth";
 import { useAuthStore } from "../../store/useAuthStore";
 import { showMessage } from "react-native-flash-message";
 import { doc, getDoc } from "firebase/firestore";
-import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 
 const LoginScreen = () => {
@@ -104,7 +95,6 @@ const LoginScreen = () => {
       <View
         style={{
           paddingHorizontal: 24,
-          paddingVertical: 28,
           flex: 1,
           justifyContent: "space-between",
           alignItems: "center",

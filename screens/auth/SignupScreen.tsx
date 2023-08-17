@@ -17,12 +17,18 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { showMessage } from "react-native-flash-message";
 import { doc, setDoc } from "firebase/firestore";
 import { Image } from "expo-image";
+import {
+  validateEmail,
+  validateMatchPassword,
+  validatePassword,
+} from "../../utils";
 
 const SignupScreen = () => {
   const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
-  const [fullName, setFullName] = useState<string>("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
 
   const theme = useColorScheme();
@@ -37,6 +43,39 @@ const SignupScreen = () => {
   };
 
   const handleSignup = async () => {
+    // input validation
+    email === "" ||
+    password === "" ||
+    confirmPassword === "" ||
+    phone === "" ||
+    fullName === ""
+      ? showMessage({
+          message: "Please fill in all fields!",
+          type: "danger",
+          icon: "danger",
+        })
+      : validateEmail(email)
+      ? validatePassword(password)
+        ? validateMatchPassword(password, confirmPassword)
+          ? await createAccount()
+          : showMessage({
+              message: "Your passwords do not match!",
+              type: "danger",
+              icon: "danger",
+            })
+        : showMessage({
+            message: "Your password is less than 8 characters!",
+            type: "danger",
+            icon: "danger",
+          })
+      : showMessage({
+          message: "Make sure your email is in the right format!",
+          type: "danger",
+          icon: "danger",
+        });
+  };
+
+  const createAccount = async () => {
     setLoading(true);
 
     try {
@@ -49,7 +88,9 @@ const SignupScreen = () => {
             icon: "success",
           });
 
-          navigate("Login");
+          navigate("ProfileSetup", {
+            uid: userCredential?.user?.uid,
+          });
         })
         .finally(() => {
           setEmail("");
@@ -78,7 +119,6 @@ const SignupScreen = () => {
       <View
         style={{
           paddingHorizontal: 16,
-          paddingVertical: 24,
           flex: 1,
           justifyContent: "space-between",
           alignItems: "center",
@@ -112,6 +152,7 @@ const SignupScreen = () => {
             onChangeText={(e) => {
               setPhone(e);
             }}
+            keyboardType="number-pad"
           />
           <Input
             placeholder="Full name"
@@ -123,6 +164,12 @@ const SignupScreen = () => {
             placeholder="Password"
             onChangeText={(e) => {
               setPassword(e);
+            }}
+          />
+          <PwdInput
+            placeholder="Confirm Password"
+            onChangeText={(e) => {
+              setConfirmPassword(e);
             }}
           />
         </View>

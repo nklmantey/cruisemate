@@ -11,17 +11,17 @@ import LoginScreen from "../screens/auth/LoginScreen";
 import SignupScreen from "../screens/auth/SignupScreen";
 import WelcomeScreen from "../screens/auth/WelcomeScreen";
 import { useAuthStore } from "../store/useAuthStore";
+import ProfileSetupScreen from "../screens/auth/ProfileSetupScreen";
 
 const Stack = createStackNavigator<AuthStackParamList>();
 
 const AuthNavigation = () => {
   const theme = useColorScheme();
   const { canGoBack, goBack } = useNavigation();
-  const isOnboarded = useAuthStore((state) => state.user?.isOnboarded);
+  const isOnboarded = useAuthStore((state) => state.isOnboarded);
 
   return (
     <Stack.Navigator
-      initialRouteName="Welcome"
       screenOptions={{
         headerLeft: () =>
           canGoBack() ? (
@@ -40,13 +40,19 @@ const AuthNavigation = () => {
         gestureDirection: "horizontal",
       }}
     >
-      <Stack.Screen
-        name={isOnboarded ? "Login" : "Welcome"}
-        component={WelcomeScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="Signup" component={SignupScreen} />
+      {isOnboarded ? (
+        <>
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Signup" component={SignupScreen} />
+          <Stack.Screen name="ProfileSetup" component={ProfileSetupScreen} />
+        </>
+      ) : (
+        <Stack.Screen
+          name={"Welcome"}
+          component={WelcomeScreen}
+          options={{ headerShown: false }}
+        />
+      )}
     </Stack.Navigator>
   );
 };

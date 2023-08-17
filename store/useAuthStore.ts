@@ -12,7 +12,6 @@ export interface User {
     lat: number;
     lng: number;
   };
-  isOnboarded: boolean;
 }
 
 interface AuthStore {
@@ -20,6 +19,8 @@ interface AuthStore {
   setUser: (partialUser: Partial<User>) => void;
   isLoggedIn: boolean;
   setIsLoggedIn: (isLoggedIn: boolean) => void;
+  isOnboarded: boolean;
+  setIsOnboarded: (isOnboarded: boolean) => void;
 }
 
 export const useAuthStore = create(
@@ -35,14 +36,16 @@ export const useAuthStore = create(
           lat: 0,
           lng: 0,
         },
-        isOnboarded: false,
       },
       isLoggedIn: false,
+      isOnboarded: false,
       setUser: (partialUser) =>
         set((state) => ({
           user: state.user ? { ...state.user, ...partialUser } : null,
         })),
       setIsLoggedIn: (isLoggedIn: boolean) => set((state) => ({ isLoggedIn })),
+      setIsOnboarded: (isOnboarded: boolean) =>
+        set((state) => ({ isOnboarded })),
     }),
     {
       name: "cruisemate-user-store",

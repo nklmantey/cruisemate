@@ -11,11 +11,10 @@ import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
 import { BoldText } from "../../components/StyledText";
-import { greetings } from "../../utils";
-import SearchBar from "../../components/home/SearchBar";
 import { useAuthStore } from "../../store/useAuthStore";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import PopularCarsCard from "../../components/home/PopularCarsCard";
+import { useLayoutEffect } from "react";
 
 const HomeScreen = () => {
   const theme = useColorScheme();
