@@ -104,7 +104,6 @@ const ProfileSetupScreen = () => {
     } finally {
       setUserIdCard("");
       setUserDriversLicense("");
-      console.log("fini");
     }
 
     setLoading(false);

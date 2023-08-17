@@ -1,31 +1,41 @@
-import { View, StatusBar, Image } from "react-native";
-import { screenHeight, screenWidth } from "../../constants/Dimensions";
-import MapView, { Marker } from "react-native-maps";
+import { View, Image } from "react-native";
+import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { useAuthStore } from "../../store/useAuthStore";
-import NearbyCard from "../../components/map/NearbyCard";
-import Logo from "../../assets/icon.png";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../config/firebase";
+import { useEffect, useState } from "react";
 
 const MapScreen = () => {
   const user = useAuthStore((state) => state.user);
+  const [rentalSuppliers, setRentalSuppliers] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function fetchRentalSuppliers() {
+      try {
+        const querySnapshot = await getDocs(collection(db, "rentalsuppliers"));
+        const fetchedSuppliers = querySnapshot.docs.map((doc) => doc.data());
+
+        setRentalSuppliers((prev) => [...prev, ...fetchedSuppliers]);
+      } catch (error) {
+        console.error("Error fetching rental suppliers:", error);
+      }
+    }
+
+    fetchRentalSuppliers();
+  }, []);
 
   return (
-    <View
-      style={{
-        flex: 1,
-      }}
-    >
-      <StatusBar barStyle="default" />
-
+    <View style={{ flex: 1 }}>
       <MapView
         style={{
-          width: screenWidth,
-          height: screenHeight,
-          position: "relative",
+          width: "100%",
+          height: "100%",
         }}
-        provider={undefined}
-        showsMyLocationButton
+        provider={PROVIDER_GOOGLE}
+        showsCompass={true}
+        showsMyLocationButton={true}
         showsUserLocation={true}
-        followsUserLocation
+        followsUserLocation={true}
         initialRegion={{
           latitude: user?.location?.lat!,
           longitude: user?.location?.lng!,
@@ -33,13 +43,15 @@ const MapScreen = () => {
           longitudeDelta: 0.01,
         }}
       >
-        <Marker
-          coordinate={{
-            latitude: user?.location.lat ?? 0,
-            longitude: user?.location.lng ?? 0,
-          }}
-          title="Joe's Car Rentals"
-        />
+        {rentalSuppliers.map((r: any) => (
+          <Marker
+            coordinate={{
+              latitude: r.location.latitude,
+              longitude: r.location.longitude,
+            }}
+            title={r.shopName}
+          />
+        ))}
       </MapView>
 
       {/* <NearbyCard /> */}
