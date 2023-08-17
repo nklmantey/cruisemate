@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   ViewStyle,
+  KeyboardTypeOptions,
 } from "react-native";
 import React, { useState } from "react";
 import { RegularText } from "../StyledText";
@@ -21,6 +22,7 @@ export type InputProps = {
   multiline?: boolean;
   value?: string;
   editable?: boolean;
+  keyboardType?: KeyboardTypeOptions;
 };
 
 const Input = (props: InputProps) => {
@@ -32,6 +34,7 @@ const Input = (props: InputProps) => {
 
       <TextInput
         placeholder={props.placeholder}
+        keyboardType={props.keyboardType}
         placeholderTextColor={Colors[theme].gray}
         onChangeText={props.onChangeText}
         style={[
@@ -102,6 +105,7 @@ const PwdInput = ({ label, placeholder, onChangeText }: InputProps) => {
           placeholderTextColor={Colors[theme].gray}
           onChangeText={onChangeText}
           secureTextEntry={visible ? false : true}
+          returnKeyType="done"
           style={[
             styles.input,
             {
@@ -145,6 +149,6 @@ const styles = StyleSheet.create({
     // borderRadius: 8,
     width: "100%",
     alignSelf: "center",
-    fontFamily: "AirbnbMedium",
+    fontFamily: "InterSoftMedium",
   },
 });

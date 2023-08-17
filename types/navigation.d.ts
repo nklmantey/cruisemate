@@ -7,7 +7,9 @@ type AuthStackParamList = {
   Welcome: undefined;
   Login: undefined;
   Signup: undefined;
-  ExtraSignup: undefined;
+  ProfileSetup: {
+    uid: string;
+  };
 };
 type TabStackParamList = {
   HomeStack: undefined;
