@@ -31,6 +31,12 @@
         {
           "locationAlwaysAndWhenInUsePermission": "Allow Cruisemate to use your location."
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "CruiseMate accesses your photos to allow image uploads."
+        }
       ]
     ]
   }
