@@ -46,7 +46,7 @@ const App = () => {
         position="top"
         floating
         animated
-        titleStyle={{ fontFamily: "AirbnbMedium", fontSize: 16 }}
+        titleStyle={{ fontFamily: "InterSoftMedium", fontSize: 16 }}
         duration={3000}
       />
     </SafeAreaProvider>

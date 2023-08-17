@@ -56,6 +56,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     width: "85%",
     alignSelf: "center",
-    fontFamily: "AirbnbMedium",
+    fontFamily: "InterSoftMedium",
   },
 });
