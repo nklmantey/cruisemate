@@ -14,10 +14,11 @@ import {
 import Colors from "../../constants/Colors";
 import { auth, db } from "../../config/firebase";
 import { signInWithEmailAndPassword, User } from "firebase/auth";
-import { useAuthStore } from "../../store/useAuthStore";
+import { useUserAuthStore } from "../../store/useUserAuthStore";
 import { showMessage } from "react-native-flash-message";
 import { doc, getDoc } from "firebase/firestore";
 import { Image } from "expo-image";
+import { useSupplierAuthStore } from "../../store/useSupplierAuthStore";
 
 const LoginScreen = () => {
   const [email, setEmail] = useState<string>("");
@@ -26,8 +27,11 @@ const LoginScreen = () => {
 
   const theme = useColorScheme();
   const { navigate }: NavigationProp<AuthStackParamList> = useNavigation();
-  const setUser = useAuthStore((state) => state.setUser);
-  const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn);
+  const setUser = useUserAuthStore((state) => state.setUser);
+  const setIsLoggedIn = useUserAuthStore((state) => state.setIsLoggedIn);
+  const setIsSupplierLoggedIn = useSupplierAuthStore(
+    (state) => state.setIsSupplierLoggedIn
+  );
 
   const handleLogin = async () => {
     setLoading(true);
@@ -43,7 +47,6 @@ const LoginScreen = () => {
             type: "success",
             icon: "success",
           });
-          setIsLoggedIn(true);
         })
         .catch((error) => {
           if (
@@ -67,17 +70,28 @@ const LoginScreen = () => {
   };
 
   const getUserData = async (user: User) => {
-    const docRef = doc(db, "users", user.uid);
-    const docSnap = await getDoc(docRef);
+    const userDocRef = doc(db, "users", user.uid);
+    const supplierDocRef = doc(db, "rentalsuppliers", user.uid);
 
-    if (docSnap.exists()) {
+    const userDocSnap = await getDoc(userDocRef);
+    const supplierDocSnap = await getDoc(supplierDocRef);
+
+    if (userDocSnap.exists()) {
       setUser({
         email: user.email!,
         id: user.uid,
-        name: docSnap.data().fullName,
-        number: docSnap.data().phone,
-        avatar: docSnap.data().avatar_url,
+        name: userDocSnap.data().fullName,
+        number: userDocSnap.data().phone,
       });
+      setIsLoggedIn(true);
+    } else if (supplierDocSnap.exists()) {
+      setUser({
+        email: user.email!,
+        id: user.uid,
+        name: supplierDocSnap.data().fullName,
+        number: supplierDocSnap.data().phone,
+      });
+      setIsSupplierLoggedIn(true);
     } else {
       console.log("No such document");
     }
@@ -94,7 +108,8 @@ const LoginScreen = () => {
     >
       <View
         style={{
-          paddingHorizontal: 24,
+          paddingHorizontal: 16,
+          paddingTop: 30,
           flex: 1,
           justifyContent: "space-between",
           alignItems: "center",
