@@ -1,9 +1,10 @@
 import {
   NavigationProp,
+  RouteProp,
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   BoldText,
   ExtraBoldText,
@@ -21,14 +22,14 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Colors from "../../constants/Colors";
-import { db } from "../../config/firebase";
+import { db, storage } from "../../config/firebase";
 import { showMessage } from "react-native-flash-message";
 import { doc, setDoc } from "firebase/firestore";
 import { Image } from "expo-image";
 import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 import ImageUpload from "../../components/ImageUpload";
-import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 type ImageUploadTypes = {
   type: "idCard" | "driversLicense";
@@ -36,48 +37,90 @@ type ImageUploadTypes = {
 
 const ProfileSetupScreen = () => {
   const [userIdCard, setUserIdCard] = useState("");
+  const [userIdCardUrl, setUserIdCardUrl] = useState("");
+  const [userIdCardCreatedAt, setUserIdCardCreatedAt] = useState("");
+  const [userIdCardUploadProgress, setUserIdCardUploadProgress] = useState("");
   const [userDriversLicense, setUserDriversLicense] = useState("");
+  const [userDriversLicenseUrl, setUserDriversLicenseUrl] = useState("");
+  const [userDriversLicenseCreatedAt, setUserDriversLicenseCreatedAt] =
+    useState("");
+  const [
+    userDriversLicenseUploadProgress,
+    setUserDriversLicenseUploadProgress,
+  ] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const theme = useColorScheme();
-  const { navigate }: NavigationProp<AuthStackParamList> = useNavigation();
-  const { params } = useRoute();
-
-  const IdBottomSheetRef = useRef<BottomSheet>(null);
-  const DriversLicenseBottomSheetRef = useRef<BottomSheet>(null);
-  const AvatarBottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = useMemo(() => ["5%", "25%"], []);
-
-  const renderBackdrop = useCallback(
-    (props: any) => (
-      <BottomSheetBackdrop
-        {...props}
-        opacity={0.4}
-        enableTouchThrough={false}
-        disappearsOnIndex={-1}
-        pressBehavior="close"
-      />
-    ),
-    []
-  );
 
   async function selectImageFromGallery(imageType: ImageUploadTypes) {
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [16, 9],
-      quality: 1,
+      quality: 0.5,
     });
 
     if (!result.canceled) {
       if (imageType.type === "idCard") {
         setUserIdCard(result.assets[0].uri);
-      }
-
-      if (imageType.type === "driversLicense") {
+        IdBottomSheetRef.current?.close();
+      } else if (imageType.type === "driversLicense") {
         setUserDriversLicense(result.assets[0].uri);
-      }
+        DriversLicenseBottomSheetRef.current?.close();
+      } else return;
     }
+  }
+
+  async function uploadId(uri: string) {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+
+    const storageRef = ref(storage, "ids/" + params?.uid);
+    const uploadTask = uploadBytesResumable(storageRef, blob);
+
+    // listen for events
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setUserIdCardUploadProgress(progress.toFixed());
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          setUserIdCardUrl(downloadURL);
+          setUserIdCardCreatedAt(new Date().toISOString());
+        });
+      }
+    );
+  }
+
+  async function uploadLicense(uri: string) {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+
+    const storageRef = ref(storage, "licenses/" + params?.uid);
+    const uploadTask = uploadBytesResumable(storageRef, blob);
+
+    // listen for events
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setUserDriversLicenseUploadProgress(progress.toFixed());
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          setUserDriversLicenseUrl(downloadURL);
+          setUserDriversLicenseCreatedAt(new Date().toISOString());
+        });
+      }
+    );
   }
 
   const addUserProfileInfoToDb = async (uid: string) => {
@@ -85,10 +128,12 @@ const ProfileSetupScreen = () => {
 
     try {
       await setDoc(
-        doc(db, "users", uid),
+        doc(db, "uploads", uid),
         {
-          idCard: userIdCard,
-          driversLicense: userDriversLicense,
+          userIdCardUrl: userIdCardUrl,
+          userIdCardCreatedAt: userIdCardCreatedAt,
+          userDriversLicenseUrl: userDriversLicenseUrl,
+          userDriversLicenseCreatedAt: userDriversLicenseCreatedAt,
         },
         { merge: true }
       );
@@ -103,11 +148,61 @@ const ProfileSetupScreen = () => {
       showMessage({ message: "Failed to upload documents" });
     } finally {
       setUserIdCard("");
+      setUserIdCardUrl("");
+      setUserIdCardCreatedAt("");
       setUserDriversLicense("");
+      setUserDriversLicenseUrl("");
+      setUserDriversLicenseCreatedAt("");
     }
 
     setLoading(false);
   };
+
+  useEffect(() => {
+    setUserIdCard("");
+    setUserIdCardUrl("");
+    setUserIdCardCreatedAt("");
+    setUserDriversLicense("");
+    setUserDriversLicenseUrl("");
+    setUserDriversLicenseCreatedAt("");
+  }, []);
+
+  useEffect(() => {
+    async function startUploadImages() {
+      if (userIdCard !== "") {
+        await uploadId(userIdCard);
+      }
+
+      if (userDriversLicense !== "") {
+        await uploadLicense(userDriversLicense);
+      }
+
+      return;
+    }
+
+    startUploadImages();
+  }, [userIdCard, userDriversLicense]);
+
+  const theme = useColorScheme();
+  const { navigate }: NavigationProp<AuthStackParamList> = useNavigation();
+  const { params }: RouteProp<AuthStackParamList> = useRoute();
+
+  const IdBottomSheetRef = useRef<BottomSheet>(null);
+  const DriversLicenseBottomSheetRef = useRef<BottomSheet>(null);
+  const snapPoints = useMemo(() => ["5%", "25%"], []);
+
+  const renderBackdrop = useCallback(
+    (props: any) => (
+      <BottomSheetBackdrop
+        {...props}
+        opacity={0.9}
+        enableTouchThrough={false}
+        disappearsOnIndex={-1}
+        pressBehavior="close"
+      />
+    ),
+    []
+  );
 
   return (
     <SafeAreaView
@@ -138,8 +233,8 @@ const ProfileSetupScreen = () => {
               source={require("../../assets/profile.svg")}
               style={{ width: 80, height: 80 }}
             />
-            <ExtraBoldText style={{ fontSize: 28 }}>
-              Profile Setup
+            <ExtraBoldText style={{ fontSize: 20 }}>
+              Profile Setup - User
             </ExtraBoldText>
           </View>
 
@@ -154,19 +249,30 @@ const ProfileSetupScreen = () => {
                 onPress={() => IdBottomSheetRef.current?.snapToIndex(1)}
               />
             ) : (
-              <TouchableOpacity
-                onPress={() => IdBottomSheetRef.current?.snapToIndex(1)}
-              >
-                <Image
-                  style={{
-                    aspectRatio: 16 / 9,
-                    borderRadius: 10,
-                  }}
-                  source={{ uri: userIdCard }}
-                  contentPosition="center"
-                  contentFit="cover"
-                />
-              </TouchableOpacity>
+              <>
+                <TouchableOpacity
+                  onPress={() => IdBottomSheetRef.current?.snapToIndex(1)}
+                >
+                  <Image
+                    style={{
+                      aspectRatio: 16 / 9,
+                      borderRadius: 10,
+                    }}
+                    source={{ uri: userIdCard }}
+                    contentPosition="center"
+                    contentFit="cover"
+                  />
+                </TouchableOpacity>
+                {userIdCardUploadProgress === "100" ? (
+                  <RegularText style={{ alignSelf: "center" }}>
+                    Uploaded ✅
+                  </RegularText>
+                ) : (
+                  <View style={{ alignSelf: "center" }}>
+                    <ActivityIndicator color={Colors[theme].text} />
+                  </View>
+                )}
+              </>
             )}
 
             {userDriversLicense === "" ? (
@@ -177,21 +283,32 @@ const ProfileSetupScreen = () => {
                 }
               />
             ) : (
-              <TouchableOpacity
-                onPress={() =>
-                  DriversLicenseBottomSheetRef.current?.snapToIndex(1)
-                }
-              >
-                <Image
-                  style={{
-                    aspectRatio: 16 / 9,
-                    borderRadius: 10,
-                  }}
-                  source={{ uri: userDriversLicense }}
-                  contentPosition="center"
-                  contentFit="cover"
-                />
-              </TouchableOpacity>
+              <>
+                <TouchableOpacity
+                  onPress={() =>
+                    DriversLicenseBottomSheetRef.current?.snapToIndex(1)
+                  }
+                >
+                  <Image
+                    style={{
+                      aspectRatio: 16 / 9,
+                      borderRadius: 10,
+                    }}
+                    source={{ uri: userDriversLicense }}
+                    contentPosition="center"
+                    contentFit="cover"
+                  />
+                </TouchableOpacity>
+                {userDriversLicenseUploadProgress === "100" ? (
+                  <RegularText style={{ alignSelf: "center" }}>
+                    Uploaded ✅
+                  </RegularText>
+                ) : (
+                  <View style={{ alignSelf: "center" }}>
+                    <ActivityIndicator color={Colors[theme].text} />
+                  </View>
+                )}
+              </>
             )}
           </View>
         </View>
@@ -205,7 +322,7 @@ const ProfileSetupScreen = () => {
                 "Finish"
               )
             }
-            onPress={() => addUserProfileInfoToDb(params?.uid)}
+            onPress={() => params && addUserProfileInfoToDb(params.uid)}
           />
           <View
             style={{
