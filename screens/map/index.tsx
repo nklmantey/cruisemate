@@ -1,12 +1,12 @@
 import { View, Image } from "react-native";
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import { useAuthStore } from "../../store/useAuthStore";
+import { useUserAuthStore } from "../../store/useUserAuthStore";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { useEffect, useState } from "react";
 
 const MapScreen = () => {
-  const user = useAuthStore((state) => state.user);
+  const user = useUserAuthStore((state) => state.user);
   const [rentalSuppliers, setRentalSuppliers] = useState<any[]>([]);
 
   useEffect(() => {

@@ -9,8 +9,6 @@ import HomeScreen from "../../screens/home";
 import SettingsScreen from "../../screens/home/Settings";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
-import CarDetails from "../../screens/home/CarDetails";
-import CarRental from "../../screens/home/CarRental";
 
 const Stack = createStackNavigator<HomeStackParamList>();
 
@@ -57,16 +55,6 @@ const HomeNavigation = () => {
         }}
       />
       <Stack.Screen name="Settings" component={SettingsScreen} />
-      <Stack.Screen
-        name="CarDetails"
-        component={CarDetails}
-        options={{ title: "Car Details" }}
-      />
-      <Stack.Screen
-        name="CarRental"
-        component={CarRental}
-        options={{ title: "Rental Booking" }}
-      />
     </Stack.Navigator>
   );
 };

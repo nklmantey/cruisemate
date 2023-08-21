@@ -13,10 +13,10 @@ import { Row } from "../../components/Row";
 import { PrimaryButton } from "../../components/ui/Button";
 import useColorScheme from "../../hooks/useColorScheme";
 import { Image } from "expo-image";
-import { useAuthStore } from "../../store/useAuthStore";
+import { useUserAuthStore } from "../../store/useUserAuthStore";
 
 export default function WelcomeScreen() {
-  const setIsOnboarded = useAuthStore((state) => state.setIsOnboarded);
+  const setIsOnboarded = useUserAuthStore((state) => state.setIsOnboarded);
   const theme = useColorScheme();
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -113,7 +113,7 @@ export default function WelcomeScreen() {
                 textAlign: "center",
               }}
             >
-              Welcome to Crusiemate
+              Welcome to CruiseMate
             </BoldText>
             <RegularText
               style={{

@@ -13,7 +13,7 @@ import { View } from "../../components/Themed";
 import useColorScheme from "../../hooks/useColorScheme";
 import Colors from "../../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import { useAuthStore } from "../../store/useAuthStore";
+import { useUserAuthStore } from "../../store/useUserAuthStore";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebase";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
@@ -22,9 +22,9 @@ const SettingsScreen = () => {
   const theme = useColorScheme();
   const { navigate }: NavigationProp<HomeStackParamList> = useNavigation();
 
-  const user = useAuthStore((state) => state.user);
-  const setUser = useAuthStore((state) => state.setUser);
-  const setIsLoggedIn = useAuthStore((state) => state.setIsLoggedIn);
+  const user = useUserAuthStore((state) => state.user);
+  const setUser = useUserAuthStore((state) => state.setUser);
+  const setIsLoggedIn = useUserAuthStore((state) => state.setIsLoggedIn);
 
   const [loading, setLoading] = useState<boolean>(false);
 

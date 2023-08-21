@@ -11,14 +11,12 @@ import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import { Ionicons } from "@expo/vector-icons";
 import { BoldText } from "../../components/StyledText";
-import { useAuthStore } from "../../store/useAuthStore";
+import { useUserAuthStore } from "../../store/useUserAuthStore";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import PopularCarsCard from "../../components/home/PopularCarsCard";
-import { useLayoutEffect } from "react";
 
 const HomeScreen = () => {
   const theme = useColorScheme();
-  const user = useAuthStore((state) => state.user);
+  const user = useUserAuthStore((state) => state.user);
   const { navigate }: NavigationProp<HomeStackParamList> = useNavigation();
 
   return (
@@ -48,22 +46,22 @@ const HomeScreen = () => {
             <TouchableOpacity
               onPress={() => navigate("Settings")}
               style={{
-                width: 45,
-                height: 45,
-                borderRadius: 25,
+                width: 40,
+                height: 40,
+                borderRadius: 20,
                 alignItems: "center",
                 justifyContent: "center",
                 borderWidth: 1,
                 borderColor: Colors[theme].grayLight,
               }}
             >
-              <Ionicons name="person" color={Colors[theme].gray} size={20} />
+              <Ionicons name="person" color={Colors[theme].gray} size={15} />
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={() => navigate("Settings")}>
               <Image
                 source={{ uri: user?.avatar }}
-                style={{ width: 30, height: 30, borderRadius: 15 }}
+                style={{ width: 40, height: 40, borderRadius: 20 }}
               />
             </TouchableOpacity>
           )}
@@ -73,6 +71,7 @@ const HomeScreen = () => {
           style={{
             flexDirection: "row",
             alignItems: "center",
+            alignSelf: "center",
             columnGap: 5,
             marginTop: 24,
           }}
@@ -81,41 +80,6 @@ const HomeScreen = () => {
           <BoldText style={{ color: Colors[theme].gray }}>
             TF Hostels, Accra, Ghana
           </BoldText>
-        </View>
-
-        <View style={{ width: "100%" }}>
-          <BoldText style={{ fontSize: 16, marginTop: 24 }}>
-            Popular cars around you
-          </BoldText>
-
-          <PopularCarsCard
-            name="BMW Sports Coupe"
-            price="10"
-            // onPress={() => navigate("CarDetails")}
-          />
-
-          {/* <PrimaryButton
-          title={loading ? <ActivityIndicator /> : "Update"}
-          onPress={async () => {
-            setLoading(true);
-            await setDoc(
-              doc(
-                db,
-                "users",
-                `${user?.id}`,
-                "history",
-                `${genRandomString(28)}`
-              ),
-              {
-                rideCancelled: "yes",
-              },
-              {
-                merge: true
-              }
-            );
-            setLoading(false);
-          }}
-        /> */}
         </View>
       </View>
     </SafeAreaView>
