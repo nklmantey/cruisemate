@@ -7,12 +7,12 @@ import useCachedResources from "./hooks/useCachedResources";
 import FlashMessage from "react-native-flash-message";
 import { useEffect } from "react";
 import * as Location from "expo-location";
-import { useAuthStore } from "./store/useAuthStore";
+import { useUserAuthStore } from "./store/useUserAuthStore";
 
 const App = () => {
   const colorScheme = useColorScheme();
   const isLoadingComplete = useCachedResources();
-  const setUser = useAuthStore((state) => state.setUser);
+  const setUser = useUserAuthStore((state) => state.setUser);
 
   const getUserLocation = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -44,7 +44,7 @@ const App = () => {
       <RootNavigation colorScheme={colorScheme} />
       <FlashMessage
         position="top"
-        floating
+        statusBarHeight={40}
         animated
         titleStyle={{ fontFamily: "InterSoftMedium", fontSize: 16 }}
         duration={3000}

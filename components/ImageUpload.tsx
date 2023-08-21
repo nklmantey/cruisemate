@@ -2,7 +2,6 @@ import { TouchableOpacity } from "react-native";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import { RegularText } from "./StyledText";
-import { View } from "./Themed";
 import { Ionicons } from "@expo/vector-icons";
 
 type ImageUploadProps = {
