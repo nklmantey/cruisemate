@@ -1,5 +1,5 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { ExtraBoldText, MediumText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import { PrimaryButton, SecondaryButton } from "../../components/ui/Button";
@@ -10,6 +10,7 @@ import {
   Platform,
   SafeAreaView,
   StatusBar,
+  TouchableOpacity,
 } from "react-native";
 import Colors from "../../constants/Colors";
 import { auth, db } from "../../config/firebase";
@@ -22,24 +23,55 @@ import {
   validateMatchPassword,
   validatePassword,
 } from "../../utils";
+import { Ionicons } from "@expo/vector-icons";
+import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
 
 const SignupScreen = () => {
-  const [email, setEmail] = useState<string>("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [fullName, setFullName] = useState("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const [accountTypeSelected, setAccountTypeSelected] = useState(false);
+  const [accountType, setAccountType] = useState<
+    "renter" | "rentalsupplier" | ""
+  >("");
+  // const setIsOnboarded = useUserAuthStore((state) => state.setIsOnboarded)
 
   const theme = useColorScheme();
   const { navigate }: NavigationProp<AuthStackParamList> = useNavigation();
 
+  const UserAccountBottomSheetRef = useRef<BottomSheet>(null);
+  const snapPoints = useMemo(() => ["5%", "25%"], []);
+
+  const renderBackdrop = useCallback(
+    (props: any) => (
+      <BottomSheetBackdrop
+        {...props}
+        opacity={0.9}
+        enableTouchThrough={false}
+        disappearsOnIndex={-1}
+        pressBehavior="close"
+      />
+    ),
+    []
+  );
+
   const addUserToDb = async (uid: string) => {
-    await setDoc(doc(db, "users", uid), {
-      email: email.trim(),
-      phone: phone,
-      fullName: fullName,
-    });
+    if (accountType === "renter") {
+      await setDoc(doc(db, "users", uid), {
+        email: email.trim(),
+        phone: phone,
+        fullName: fullName,
+      });
+    } else if (accountType === "rentalsupplier") {
+      await setDoc(doc(db, "rentalsuppliers", uid), {
+        email: email.trim(),
+        phone: phone,
+        fullName: fullName,
+      });
+    }
   };
 
   const handleSignup = async () => {
@@ -88,9 +120,15 @@ const SignupScreen = () => {
             icon: "success",
           });
 
-          navigate("ProfileSetup", {
-            uid: userCredential?.user?.uid,
-          });
+          if (accountType === "renter") {
+            navigate("ProfileSetup", {
+              uid: userCredential?.user?.uid,
+            });
+          } else if (accountType === "rentalsupplier") {
+            navigate("SupplierProfileSetup", {
+              uid: userCredential?.user?.uid,
+            });
+          }
         })
         .finally(() => {
           setEmail("");
@@ -119,6 +157,7 @@ const SignupScreen = () => {
       <View
         style={{
           paddingHorizontal: 16,
+          paddingTop: 30,
           flex: 1,
           justifyContent: "space-between",
           alignItems: "center",
@@ -172,6 +211,44 @@ const SignupScreen = () => {
               setConfirmPassword(e);
             }}
           />
+
+          <TouchableOpacity
+            onPress={() => UserAccountBottomSheetRef.current?.snapToIndex(1)}
+            style={{
+              paddingHorizontal: 12,
+              paddingVertical: 24,
+              width: "100%",
+              alignSelf: "center",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            {accountTypeSelected ? (
+              <>
+                <MediumText style={{ color: Colors[theme].gray, fontSize: 18 }}>
+                  {accountType === "renter"
+                    ? "I am a car renter"
+                    : "I am a rental car supplier"}
+                </MediumText>
+                <Ionicons
+                  name="person-circle-outline"
+                  size={25}
+                  color={Colors[theme].text}
+                />
+              </>
+            ) : (
+              <>
+                <MediumText style={{ color: Colors[theme].gray, fontSize: 18 }}>
+                  Select account type
+                </MediumText>
+                <Ionicons
+                  name="person-circle-outline"
+                  size={25}
+                  color={Colors[theme].text}
+                />
+              </>
+            )}
+          </TouchableOpacity>
         </View>
 
         <View style={{ width: "100%" }}>
@@ -205,6 +282,45 @@ const SignupScreen = () => {
           </View>
         </View>
       </View>
+
+      <BottomSheet
+        ref={UserAccountBottomSheetRef}
+        index={-1}
+        snapPoints={snapPoints}
+        backdropComponent={renderBackdrop}
+        backgroundStyle={{ backgroundColor: Colors[theme].background }}
+        handleIndicatorStyle={{ backgroundColor: Colors[theme].text }}
+      >
+        <View
+          style={{
+            backgroundColor: Colors[theme].background,
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 10,
+            paddingHorizontal: 30,
+          }}
+        >
+          <PrimaryButton
+            title="Rental Supplier"
+            onPress={() => {
+              setAccountTypeSelected(true);
+              setAccountType("rentalsupplier");
+              UserAccountBottomSheetRef.current?.close();
+            }}
+            style={{ backgroundColor: Colors[theme].text }}
+          />
+          <PrimaryButton
+            onPress={() => {
+              setAccountTypeSelected(true);
+              setAccountType("renter");
+              UserAccountBottomSheetRef.current?.close();
+            }}
+            title="Renter"
+            style={{ backgroundColor: Colors[theme].text }}
+          />
+        </View>
+      </BottomSheet>
     </SafeAreaView>
   );
 };
