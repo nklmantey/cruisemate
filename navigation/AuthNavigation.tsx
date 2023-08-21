@@ -10,15 +10,17 @@ import { useNavigation } from "@react-navigation/native";
 import LoginScreen from "../screens/auth/LoginScreen";
 import SignupScreen from "../screens/auth/SignupScreen";
 import WelcomeScreen from "../screens/auth/WelcomeScreen";
-import { useAuthStore } from "../store/useAuthStore";
+import { useUserAuthStore } from "../store/useUserAuthStore";
 import ProfileSetupScreen from "../screens/auth/ProfileSetupScreen";
+import SupplierProfileSetupScreen from "../screens/auth/SupplierProfileSetupScreen";
+import SupplierProfileSetupExtraScreen from "../screens/auth/SupplierProfileSetupExtraScreen";
 
 const Stack = createStackNavigator<AuthStackParamList>();
 
 const AuthNavigation = () => {
   const theme = useColorScheme();
   const { canGoBack, goBack } = useNavigation();
-  const isOnboarded = useAuthStore((state) => state.isOnboarded);
+  const isOnboarded = useUserAuthStore((state) => state.isOnboarded);
 
   return (
     <Stack.Navigator
@@ -45,6 +47,14 @@ const AuthNavigation = () => {
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Signup" component={SignupScreen} />
           <Stack.Screen name="ProfileSetup" component={ProfileSetupScreen} />
+          <Stack.Screen
+            name="SupplierProfileSetup"
+            component={SupplierProfileSetupScreen}
+          />
+          <Stack.Screen
+            name="SupplierProfileSetupExtra"
+            component={SupplierProfileSetupExtraScreen}
+          />
         </>
       ) : (
         <Stack.Screen

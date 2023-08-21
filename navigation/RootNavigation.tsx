@@ -5,14 +5,19 @@ import {
   DarkTheme,
   DefaultTheme,
 } from "@react-navigation/native";
-import { useAuthStore } from "../store/useAuthStore";
+import { useUserAuthStore } from "../store/useUserAuthStore";
 import TabNavigation from "./TabNavigation";
 import AuthNavigation from "./AuthNavigation";
+import { useSupplierAuthStore } from "../store/useSupplierAuthStore";
+import SupplierTabNavigation from "./SupplierTabNavigation";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const RootNavigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) => {
-  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+  const isLoggedIn = useUserAuthStore((state) => state.isLoggedIn);
+  const isSupplierLoggedIn = useSupplierAuthStore(
+    (state) => state.isSupplierLoggedIn
+  );
 
   return (
     <NavigationContainer
@@ -25,6 +30,11 @@ const RootNavigation = ({ colorScheme }: { colorScheme: ColorSchemeName }) => {
       >
         {isLoggedIn ? (
           <Stack.Screen name="TabStack" component={TabNavigation} />
+        ) : isSupplierLoggedIn ? (
+          <Stack.Screen
+            name="SupplierTabStack"
+            component={SupplierTabNavigation}
+          />
         ) : (
           <Stack.Screen name="AuthStack" component={AuthNavigation} />
         )}
