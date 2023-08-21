@@ -23,7 +23,7 @@ interface AuthStore {
   setIsOnboarded: (isOnboarded: boolean) => void;
 }
 
-export const useAuthStore = create(
+export const useUserAuthStore = create(
   persist<AuthStore>(
     (set, _) => ({
       user: {
