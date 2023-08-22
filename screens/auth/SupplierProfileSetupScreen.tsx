@@ -56,7 +56,7 @@ const SupplierProfileSetupScreen = () => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [16, 9],
-      quality: 0.5,
+      quality: 0.2,
     });
 
     if (!result.canceled) {

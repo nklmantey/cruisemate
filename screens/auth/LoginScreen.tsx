@@ -28,6 +28,7 @@ const LoginScreen = () => {
   const theme = useColorScheme();
   const { navigate }: NavigationProp<AuthStackParamList> = useNavigation();
   const setUser = useUserAuthStore((state) => state.setUser);
+  const setSupplier = useSupplierAuthStore((state) => state.setSupplier);
   const setIsLoggedIn = useUserAuthStore((state) => state.setIsLoggedIn);
   const setIsSupplierLoggedIn = useSupplierAuthStore(
     (state) => state.setIsSupplierLoggedIn
@@ -85,11 +86,15 @@ const LoginScreen = () => {
       });
       setIsLoggedIn(true);
     } else if (supplierDocSnap.exists()) {
-      setUser({
+      setSupplier({
         email: user.email!,
         id: user.uid,
-        name: supplierDocSnap.data().fullName,
         number: supplierDocSnap.data().phone,
+        shopName: "",
+        shopLocation: {
+          lat: 0,
+          lng: 0,
+        },
       });
       setIsSupplierLoggedIn(true);
     } else {

@@ -41,6 +41,7 @@ type HistoryStackParamList = {
 
 type SupplierCarsParamList = {
   Cars: undefined;
+  AddCarModal: undefined;
 };
 type SupplierMapParamList = {
   VehicleTracking: undefined;

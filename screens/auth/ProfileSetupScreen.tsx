@@ -55,7 +55,7 @@ const ProfileSetupScreen = () => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [16, 9],
-      quality: 0.5,
+      quality: 0.2,
     });
 
     if (!result.canceled) {
@@ -168,20 +168,26 @@ const ProfileSetupScreen = () => {
   }, []);
 
   useEffect(() => {
-    async function startUploadImages() {
+    async function startUploadId() {
       if (userIdCard !== "") {
         await uploadId(userIdCard);
       }
-
-      if (userDriversLicense !== "") {
-        await uploadLicense(userDriversLicense);
-      }
-
       return;
     }
 
-    startUploadImages();
-  }, [userIdCard, userDriversLicense]);
+    startUploadId();
+  }, [userIdCard]);
+
+  useEffect(() => {
+    async function startUploadLicense() {
+      if (userDriversLicense !== "") {
+        await uploadLicense(userDriversLicense);
+      }
+      return;
+    }
+
+    startUploadLicense();
+  }, [userDriversLicense]);
 
   const theme = useColorScheme();
   const { navigate }: NavigationProp<AuthStackParamList> = useNavigation();
