@@ -43,7 +43,7 @@ const DriverProfileSetupScreen = () => {
 
     try {
       await setDoc(
-        doc(db, "users", uid),
+        doc(db, "rentalsuppliers", uid),
         {
           shopName: rentalSupplierShopName,
         },

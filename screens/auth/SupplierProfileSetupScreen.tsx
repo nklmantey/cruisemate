@@ -37,13 +37,10 @@ type ImageUploadTypes = {
 const SupplierProfileSetupScreen = () => {
   const [supplierIdCard, setSupplierIdCard] = useState("");
   const [supplierIdCardUrl, setSupplierIdCardUrl] = useState("");
-  const [supplierIdCardCreatedAt, setSupplierIdCardCreatedAt] = useState("");
   const [supplierIdCardUploadProgress, setSupplierIdCardUploadProgress] =
     useState("");
   const [supplierDriversLicense, setSupplierDriversLicense] = useState("");
   const [supplierDriversLicenseUrl, setSupplierDriversLicenseUrl] =
-    useState("");
-  const [supplierDriversLicenseCreatedAt, setSupplierDriversLicenseCreatedAt] =
     useState("");
   const [
     supplierDriversLicenseUploadProgress,
@@ -91,7 +88,6 @@ const SupplierProfileSetupScreen = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
           setSupplierIdCardUrl(downloadURL);
-          setSupplierIdCardCreatedAt(new Date().toISOString());
         });
       }
     );
@@ -118,7 +114,6 @@ const SupplierProfileSetupScreen = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
           setSupplierDriversLicenseUrl(downloadURL);
-          setSupplierDriversLicenseCreatedAt(new Date().toISOString());
         });
       }
     );
@@ -132,9 +127,7 @@ const SupplierProfileSetupScreen = () => {
         doc(db, "uploads", uid),
         {
           supplierIdCardUrl: supplierIdCardUrl,
-          supplierIdCardCreatedAt: supplierIdCardCreatedAt,
           supplierDriversLicenseUrl: supplierDriversLicenseUrl,
-          supplierDriversLicenseCreatedAt: supplierDriversLicenseCreatedAt,
         },
         { merge: true }
       );
@@ -150,10 +143,8 @@ const SupplierProfileSetupScreen = () => {
     } finally {
       setSupplierIdCard("");
       setSupplierIdCardUrl("");
-      setSupplierIdCardCreatedAt("");
       setSupplierDriversLicense("");
       setSupplierDriversLicenseUrl("");
-      setSupplierDriversLicenseCreatedAt("");
     }
 
     setLoading(false);

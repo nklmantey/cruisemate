@@ -32,7 +32,7 @@ const SupplierHomeScreen = () => {
 
   return (
     <View style={{ marginTop: 50 }}>
-      <PrimaryButton title={"logo"} onPress={() => handleLogout()} />
+      <PrimaryButton title={"logout"} onPress={() => handleLogout()} />
     </View>
   );
 };

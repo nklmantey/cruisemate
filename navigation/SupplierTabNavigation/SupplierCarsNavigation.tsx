@@ -8,7 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import SupplierCarsScreen from "../../screens/supplier/cars";
-import AddCarModal from "../../screens/supplier/cars/AddCarModal";
+import AddCarScreen from "../../screens/supplier/cars/AddCarScreen";
 
 const Stack = createStackNavigator<SupplierCarsParamList>();
 
@@ -24,8 +24,8 @@ const SupplierCarsNavigation = () => {
     >
       <Stack.Screen name="Cars" component={SupplierCarsScreen} />
       <Stack.Screen
-        name="AddCarModal"
-        component={AddCarModal}
+        name="AddCarScreen"
+        component={AddCarScreen}
         options={({ navigation }) => ({
           title: "Add Car",
           headerShown: true,
@@ -33,26 +33,16 @@ const SupplierCarsNavigation = () => {
             <TouchableOpacity
               style={{
                 marginLeft: 16,
-                width: 30,
-                height: 30,
-                borderRadius: 8,
-                backgroundColor: Colors[theme].text,
-                alignItems: "center",
-                justifyContent: "center",
               }}
               onPress={() => navigation.navigate("Cars")}
             >
               <Ionicons
-                name="ios-arrow-down"
-                size={15}
-                color={Colors[theme].background}
+                name="ios-arrow-back"
+                size={20}
+                color={Colors[theme].text}
               />
             </TouchableOpacity>
           ),
-          ...TransitionPresets.ModalPresentationIOS,
-          animationEnabled: true,
-          gestureEnabled: true,
-          gestureDirection: "vertical",
         })}
       />
     </Stack.Navigator>

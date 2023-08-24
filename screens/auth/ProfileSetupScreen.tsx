@@ -356,12 +356,10 @@ const ProfileSetupScreen = () => {
         index={-1}
         snapPoints={snapPoints}
         backdropComponent={renderBackdrop}
-        backgroundStyle={{ backgroundColor: Colors[theme].background }}
-        handleIndicatorStyle={{ backgroundColor: Colors[theme].text }}
       >
         <View
           style={{
-            backgroundColor: Colors[theme].background,
+            backgroundColor: Colors[theme].text,
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
