@@ -25,10 +25,12 @@ import { showMessage } from "react-native-flash-message";
 import EmptyState from "../../../components/EmptyState";
 
 const SupplierCarCard = (car: SupplierCar) => {
+  const { navigate }: NavigationProp<SupplierCarsParamList> = useNavigation();
   const theme = useColorScheme();
 
   return (
-    <View
+    <TouchableOpacity
+      onPress={() => navigate("CarDetailsScreen")}
       style={{
         backgroundColor: Colors[theme].text,
         width: "100%",
@@ -103,7 +105,7 @@ const SupplierCarCard = (car: SupplierCar) => {
           </BoldText>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -180,13 +182,13 @@ const SupplierCarsScreen = () => {
             alignItems: "center",
             justifyContent: "center",
             zIndex: 1000,
-            width: 60,
-            height: 60,
+            width: 50,
+            height: 50,
             backgroundColor: Colors[theme].text,
             borderRadius: 30,
           }}
         >
-          <Ionicons name="add" size={30} color={Colors[theme].background} />
+          <Ionicons name="add" size={25} color={Colors[theme].background} />
         </TouchableOpacity>
 
         <FlatList
