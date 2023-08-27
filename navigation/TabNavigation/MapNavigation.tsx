@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import {
   TransitionPresets,
   createStackNavigator,
@@ -8,26 +8,18 @@ import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import MapScreen from "../../screens/map";
+import ViewSupplierStore from "../../screens/map/ViewSupplierStore";
 
 const Stack = createStackNavigator<MapStackParamList>();
 
 const MapNavigation = () => {
-  const { canGoBack, goBack } = useNavigation();
+  const { navigate, canGoBack }: NavigationProp<MapStackParamList> =
+    useNavigation();
   const theme = useColorScheme();
 
   return (
     <Stack.Navigator
       screenOptions={{
-        headerLeft: () =>
-          canGoBack() ? (
-            <TouchableOpacity onPress={goBack}>
-              <Ionicons
-                name="arrow-back"
-                color={Colors[theme].text}
-                size={20}
-              />
-            </TouchableOpacity>
-          ) : null,
         headerShown: false,
         ...TransitionPresets.SlideFromRightIOS,
         animationEnabled: true,
@@ -36,6 +28,28 @@ const MapNavigation = () => {
       }}
     >
       <Stack.Screen name="Map" component={MapScreen} />
+      <Stack.Screen
+        name="ViewSupplierStore"
+        component={ViewSupplierStore}
+        options={{
+          headerLeft: () =>
+            canGoBack() ? (
+              <TouchableOpacity
+                style={{
+                  marginLeft: 16,
+                }}
+                onPress={() => navigate("Map")}
+              >
+                <Ionicons
+                  name="arrow-back"
+                  color={Colors[theme].text}
+                  size={20}
+                />
+              </TouchableOpacity>
+            ) : null,
+          headerShown: true,
+        }}
+      />
     </Stack.Navigator>
   );
 };
