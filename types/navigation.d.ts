@@ -34,6 +34,11 @@ type HomeStackParamList = {
 };
 type MapStackParamList = {
   Map: undefined;
+  ViewSupplierStore:
+    | undefined
+    | {
+        data: RentalSupplier;
+      };
 };
 type HistoryStackParamList = {
   History: undefined;
@@ -42,6 +47,7 @@ type HistoryStackParamList = {
 type SupplierCarsParamList = {
   Cars: undefined;
   AddCarScreen: undefined;
+  CarDetailsScreen: undefined;
 };
 type SupplierMapParamList = {
   VehicleTracking: undefined;
