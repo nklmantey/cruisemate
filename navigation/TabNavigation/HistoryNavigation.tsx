@@ -3,11 +3,12 @@ import {
   TransitionPresets,
   createStackNavigator,
 } from "@react-navigation/stack";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 import HistoryScreen from "../../screens/history";
+import { RegularText } from "../../components/StyledText";
 
 const Stack = createStackNavigator<HistoryStackParamList>();
 
@@ -18,17 +19,7 @@ const HistoryNavigation = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerLeft: () =>
-          canGoBack() ? (
-            <TouchableOpacity onPress={goBack}>
-              <Ionicons
-                name="arrow-back"
-                color={Colors[theme].text}
-                size={20}
-              />
-            </TouchableOpacity>
-          ) : null,
-        headerShown: false,
+        headerShown: true,
         ...TransitionPresets.SlideFromRightIOS,
         animationEnabled: true,
         gestureEnabled: true,

@@ -19,7 +19,7 @@ type AuthStackParamList = {
   };
 };
 type TabStackParamList = {
-  HomeStack: undefined;
+  ProfileStack: undefined;
   MapStack: undefined;
   HistoryStack: undefined;
 };
@@ -27,10 +27,10 @@ type SupplierTabStackParamList = {
   HomeStack: undefined;
   MapStack: undefined;
   CarsStack: undefined;
+  ProfileStack: undefined;
 };
-type HomeStackParamList = {
-  Home: undefined;
-  Settings: undefined;
+type ProfileStackParamList = {
+  Profile: undefined;
 };
 type MapStackParamList = {
   Map: undefined;
@@ -54,4 +54,9 @@ type SupplierMapParamList = {
 };
 type SupplierHomeParamList = {
   SupplierHome: undefined;
+  RentalDetails:
+    | undefined
+    | {
+        data: any;
+      };
 };

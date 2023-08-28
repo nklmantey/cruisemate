@@ -31,10 +31,14 @@ function validateMatchPassword(
   return password.trim() === confirmPassword.trim();
 }
 
+function capitalizeWords(str: string) {
+  return str.replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
 export {
   greetings,
-  money,
   validateEmail,
   validatePassword,
   validateMatchPassword,
+  capitalizeWords,
 };

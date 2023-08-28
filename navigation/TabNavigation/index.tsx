@@ -1,17 +1,49 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeNavigation from "./HomeNavigation";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
-import { BoldText, MediumText } from "../../components/StyledText";
+import { MediumText, RegularText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import MapNavigation from "./MapNavigation";
 import HistoryNavigation from "./HistoryNavigation";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../config/firebase";
+import { useUserAuthStore } from "../../store/useUserAuthStore";
+import { useEffect, useState } from "react";
+import ProfileNavigation from "./ProfileNavigation";
 
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
 const TabNavigation = () => {
   const theme = useColorScheme();
+  const user = useUserAuthStore((state) => state.user);
+  const [userRequests, setUserRequests] = useState<any[]>([]);
+  const [requestsCount, setRequestsCount] = useState(0);
+
+  const fetchRequestsByUser = async () => {
+    try {
+      const q = query(
+        collection(db, "requests"),
+        where("userId", "==", user?.id)
+      );
+
+      const requestsArray: any = [];
+
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        requestsArray.push(doc.data());
+      });
+
+      setUserRequests(requestsArray);
+      setRequestsCount(querySnapshot.size);
+    } catch (error) {
+      console.error("Error fetching user UID:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchRequestsByUser();
+  }, [userRequests, requestsCount]);
 
   return (
     <Tab.Navigator
@@ -23,23 +55,6 @@ const TabNavigation = () => {
         },
       }}
     >
-      <Tab.Screen
-        name="HomeStack"
-        component={HomeNavigation}
-        options={{
-          tabBarIcon: ({ focused, color, size }) =>
-            focused ? (
-              <View style={{ alignItems: "center" }}>
-                <Ionicons name="car-outline" size={size} color={color} />
-                <MediumText style={{ fontSize: 12, color: color }}>
-                  Home
-                </MediumText>
-              </View>
-            ) : (
-              <Ionicons name="car-outline" size={size} color={color} />
-            ),
-        }}
-      />
       <Tab.Screen
         name="MapStack"
         component={MapNavigation}
@@ -64,13 +79,85 @@ const TabNavigation = () => {
           tabBarIcon: ({ focused, color, size }) =>
             focused ? (
               <View style={{ alignItems: "center" }}>
-                <Ionicons name="time-outline" size={size} color={color} />
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    position: "relative",
+                  }}
+                >
+                  <Ionicons name="time-outline" size={size} color={color} />
+                  <View
+                    style={{
+                      width: 15,
+                      height: 15,
+                      borderRadius: 20,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      backgroundColor: "red",
+                      position: "absolute",
+                      top: -2,
+                      left: 16,
+                    }}
+                  >
+                    <RegularText style={{ color: "white", fontSize: 10 }}>
+                      {requestsCount}
+                    </RegularText>
+                  </View>
+                </View>
                 <MediumText style={{ fontSize: 12, color: color }}>
                   History
                 </MediumText>
               </View>
             ) : (
-              <Ionicons name="time-outline" size={size} color={color} />
+              <View style={{ alignItems: "center" }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    position: "relative",
+                  }}
+                >
+                  <Ionicons name="time-outline" size={size} color={color} />
+                  <View
+                    style={{
+                      width: 15,
+                      height: 15,
+                      borderRadius: 20,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      backgroundColor: "red",
+                      position: "absolute",
+                      top: -2,
+                      left: 16,
+                    }}
+                  >
+                    <RegularText style={{ color: "white", fontSize: 10 }}>
+                      {requestsCount}
+                    </RegularText>
+                  </View>
+                </View>
+                <MediumText style={{ fontSize: 12, color: color }}>
+                  History
+                </MediumText>
+              </View>
+            ),
+        }}
+      />
+      <Tab.Screen
+        name="ProfileStack"
+        component={ProfileNavigation}
+        options={{
+          tabBarIcon: ({ focused, color, size }) =>
+            focused ? (
+              <View style={{ alignItems: "center" }}>
+                <Ionicons name="person-outline" size={size} color={color} />
+                <MediumText style={{ fontSize: 12, color: color }}>
+                  Profile
+                </MediumText>
+              </View>
+            ) : (
+              <Ionicons name="person-outline" size={size} color={color} />
             ),
         }}
       />

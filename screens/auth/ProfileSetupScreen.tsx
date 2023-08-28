@@ -12,7 +12,7 @@ import {
   RegularText,
 } from "../../components/StyledText";
 import { View } from "../../components/Themed";
-import { PrimaryButton, SecondaryButton } from "../../components/ui/Button";
+import { PrimaryButton } from "../../components/ui/Button";
 import useColorScheme from "../../hooks/useColorScheme";
 import {
   ActivityIndicator,
@@ -38,12 +38,10 @@ type ImageUploadTypes = {
 const ProfileSetupScreen = () => {
   const [userIdCard, setUserIdCard] = useState("");
   const [userIdCardUrl, setUserIdCardUrl] = useState("");
-  const [userIdCardCreatedAt, setUserIdCardCreatedAt] = useState("");
   const [userIdCardUploadProgress, setUserIdCardUploadProgress] = useState("");
   const [userDriversLicense, setUserDriversLicense] = useState("");
   const [userDriversLicenseUrl, setUserDriversLicenseUrl] = useState("");
-  const [userDriversLicenseCreatedAt, setUserDriversLicenseCreatedAt] =
-    useState("");
+  useState("");
   const [
     userDriversLicenseUploadProgress,
     setUserDriversLicenseUploadProgress,
@@ -90,7 +88,6 @@ const ProfileSetupScreen = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
           setUserIdCardUrl(downloadURL);
-          setUserIdCardCreatedAt(new Date().toISOString());
         });
       }
     );
@@ -117,7 +114,6 @@ const ProfileSetupScreen = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
           setUserDriversLicenseUrl(downloadURL);
-          setUserDriversLicenseCreatedAt(new Date().toISOString());
         });
       }
     );
@@ -131,9 +127,7 @@ const ProfileSetupScreen = () => {
         doc(db, "uploads", uid),
         {
           userIdCardUrl: userIdCardUrl,
-          userIdCardCreatedAt: userIdCardCreatedAt,
           userDriversLicenseUrl: userDriversLicenseUrl,
-          userDriversLicenseCreatedAt: userDriversLicenseCreatedAt,
         },
         { merge: true }
       );
@@ -149,10 +143,8 @@ const ProfileSetupScreen = () => {
     } finally {
       setUserIdCard("");
       setUserIdCardUrl("");
-      setUserIdCardCreatedAt("");
       setUserDriversLicense("");
       setUserDriversLicenseUrl("");
-      setUserDriversLicenseCreatedAt("");
     }
 
     setLoading(false);
@@ -161,10 +153,8 @@ const ProfileSetupScreen = () => {
   useEffect(() => {
     setUserIdCard("");
     setUserIdCardUrl("");
-    setUserIdCardCreatedAt("");
     setUserDriversLicense("");
     setUserDriversLicenseUrl("");
-    setUserDriversLicenseCreatedAt("");
   }, []);
 
   useEffect(() => {

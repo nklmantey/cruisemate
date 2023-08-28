@@ -90,7 +90,7 @@ const LoginScreen = () => {
         email: user.email!,
         id: user.uid,
         number: supplierDocSnap.data().phone,
-        shopName: "",
+        shopName: supplierDocSnap.data().shopName,
         shopLocation: {
           lat: 0,
           lng: 0,

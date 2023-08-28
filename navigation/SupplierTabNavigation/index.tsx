@@ -7,6 +7,7 @@ import { View } from "../../components/Themed";
 import SupplierHomeNavigation from "./SupplierHomeNavigation";
 import SupplierCarsNavigation from "./SupplierCarsNavigation";
 import SupplierMapsNavigation from "./SupplierMapsNavigation";
+import SupplierProfileNavigation from "./SupplierProfileNavigation";
 
 const Tab = createBottomTabNavigator<SupplierTabStackParamList>();
 
@@ -71,6 +72,23 @@ const SupplierTabNavigation = () => {
               </View>
             ) : (
               <Ionicons name="car-outline" size={size} color={color} />
+            ),
+        }}
+      />
+      <Tab.Screen
+        name="ProfileStack"
+        component={SupplierProfileNavigation}
+        options={{
+          tabBarIcon: ({ focused, color, size }) =>
+            focused ? (
+              <View style={{ alignItems: "center" }}>
+                <Ionicons name="person-outline" size={size} color={color} />
+                <MediumText style={{ fontSize: 12, color: color }}>
+                  Profile
+                </MediumText>
+              </View>
+            ) : (
+              <Ionicons name="person-outline" size={size} color={color} />
             ),
         }}
       />

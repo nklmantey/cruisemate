@@ -1,30 +1,27 @@
 import { useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import {
-  Platform,
-  Image,
-  TouchableOpacity,
-  Alert,
-  ActivityIndicator,
-} from "react-native";
+import { TouchableOpacity, Alert, ActivityIndicator } from "react-native";
 import { Row } from "../../components/Row";
 import { BoldText, RegularText } from "../../components/StyledText";
 import { View } from "../../components/Themed";
 import useColorScheme from "../../hooks/useColorScheme";
 import Colors from "../../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import { useUserAuthStore } from "../../store/useUserAuthStore";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebase";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { useSupplierAuthStore } from "../../store/useSupplierAuthStore";
 
-const SettingsScreen = () => {
+const SupplierProfile = () => {
   const theme = useColorScheme();
-  const { navigate }: NavigationProp<HomeStackParamList> = useNavigation();
+  const { navigate }: NavigationProp<ProfileStackParamList> = useNavigation();
 
-  const user = useUserAuthStore((state) => state.user);
-  const setUser = useUserAuthStore((state) => state.setUser);
-  const setIsLoggedIn = useUserAuthStore((state) => state.setIsLoggedIn);
+  const supplier = useSupplierAuthStore((state) => state.supplier);
+  const setSupplier = useSupplierAuthStore((state) => state.setSupplier);
+  const setIsSupplierLoggedIn = useSupplierAuthStore(
+    (state) => state.setIsSupplierLoggedIn
+  );
+
+  console.log(supplier);
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -33,19 +30,18 @@ const SettingsScreen = () => {
 
     try {
       await signOut(auth);
-      setUser({
+      setSupplier({
         id: "",
-        avatar: "",
         email: "",
-        name: "",
+        shopName: "",
         number: "",
-        location: {
+        shopLocation: {
           lat: 0,
           lng: 0,
         },
       });
 
-      setIsLoggedIn(false);
+      setIsSupplierLoggedIn(false);
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -68,29 +64,23 @@ const SettingsScreen = () => {
           marginBottom: 16,
         }}
       >
-        {!user?.avatar || user?.avatar === null ? (
-          <View
-            style={{
-              width: 50,
-              height: 50,
-              borderRadius: 25,
-              alignItems: "center",
-              justifyContent: "center",
-              borderWidth: 1,
-              borderColor: Colors[theme].grayLight,
-            }}
-          >
-            <Ionicons name="person" color={Colors[theme].gray} size={20} />
-          </View>
-        ) : (
-          <Image
-            source={{ uri: user?.avatar }}
-            style={{ width: 50, height: 50, borderRadius: 25 }}
-          />
-        )}
+        <View
+          style={{
+            width: 50,
+            height: 50,
+            borderRadius: 25,
+            alignItems: "center",
+            justifyContent: "center",
+            borderWidth: 1,
+            borderColor: Colors[theme].grayLight,
+          }}
+        >
+          <Ionicons name="person" color={Colors[theme].gray} size={20} />
+        </View>
+
         <View>
-          <BoldText style={{ fontSize: 18 }}>{user?.name}</BoldText>
-          <RegularText>{user?.email}</RegularText>
+          <BoldText style={{ fontSize: 18 }}>{supplier?.shopName}</BoldText>
+          <RegularText>{supplier?.email}</RegularText>
         </View>
       </View>
 
@@ -275,4 +265,4 @@ const SettingsScreen = () => {
   );
 };
 
-export default SettingsScreen;
+export default SupplierProfile;

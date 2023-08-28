@@ -5,25 +5,18 @@ import {
 } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import HomeScreen from "../../screens/home";
-import SettingsScreen from "../../screens/home/Settings";
+import SettingsScreen from "../../screens/home";
 import Colors from "../../constants/Colors";
 import useColorScheme from "../../hooks/useColorScheme";
 
-const Stack = createStackNavigator<HomeStackParamList>();
+const Stack = createStackNavigator<ProfileStackParamList>();
 
-const HomeNavigation = () => {
-  const { goBack } = useNavigation();
+const ProfileNavigation = () => {
   const theme = useColorScheme();
 
   return (
     <Stack.Navigator
       screenOptions={{
-        headerLeft: () => (
-          <TouchableOpacity onPress={goBack}>
-            <Ionicons name="arrow-back" color={Colors[theme].text} size={20} />
-          </TouchableOpacity>
-        ),
         headerTitleStyle: {
           fontFamily: "InterSoftBold",
           fontSize: 16,
@@ -47,16 +40,9 @@ const HomeNavigation = () => {
         gestureDirection: "horizontal",
       }}
     >
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="Profile" component={SettingsScreen} />
     </Stack.Navigator>
   );
 };
 
-export default HomeNavigation;
+export default ProfileNavigation;
